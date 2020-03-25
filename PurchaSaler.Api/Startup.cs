@@ -48,6 +48,18 @@ namespace PurchaSaler.Api
                 };
             });
 
+            //×¢²áCors·þÎñ
+            services.AddCors(option =>
+            {
+                option.AddPolicy("any", buider =>
+                 {
+                     buider.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader();
+ 
+                 });
+            });
+
 
             services.AddDbContext<PurchaSalerDbContext>(option => option.UseSqlServer(
                 Configuration.GetConnectionString("constr")));
@@ -71,6 +83,8 @@ namespace PurchaSaler.Api
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

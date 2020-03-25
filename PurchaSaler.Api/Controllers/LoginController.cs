@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ using System.Security.Claims;
 namespace PurchaSaler.Api.Controllers
 {
     [Route("api/login")]
+    [EnableCors("any")]
     [ApiController]
     public class LoginController : ControllerBase
     {

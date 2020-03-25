@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PurchaSaler.Api.Entity;
@@ -11,6 +12,7 @@ using PurchaSaler.Api.Entity;
 namespace PurchaSaler.Api.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("any")]
     [ApiController]
     public class UsersController : ControllerBase
     {
