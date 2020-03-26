@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PurchaSaler.Api.Entity;
+using PurchaSaler.Models;
 
 namespace PurchaSaler.Api.Controllers
 {

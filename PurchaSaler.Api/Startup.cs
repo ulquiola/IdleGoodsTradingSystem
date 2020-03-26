@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PurchaSaler.Api.Entity;
 using System;
 using System.Text;
+using PurchaSaler.Models;
 
 namespace PurchaSaler.Api
 {
@@ -62,7 +62,7 @@ namespace PurchaSaler.Api
 
 
             services.AddDbContext<PurchaSalerDbContext>(option => option.UseSqlServer(
-                Configuration.GetConnectionString("constr")));
+                Configuration.GetConnectionString("constr"),b=>b.MigrationsAssembly("PurchaSaler.Api")));
 
             services.AddSwaggerGen(option => 
             {

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PurchaSaler.Api.Entity;
 using PurchaSaler.Api.Services;
+using PurchaSaler.Models;
 using System.Linq;
 using System.Security.Claims;
 
@@ -40,7 +40,7 @@ namespace PurchaSaler.Api.Controllers
                        where m.UserName == user.UserName
                        select m).FirstOrDefault();
             //验证该用户是否存在
-            if (man!= null)
+            if (man != null)
             {
                 //验证密码
                 if (user.Password == man.Password)
@@ -50,7 +50,7 @@ namespace PurchaSaler.Api.Controllers
                     var token = jwt.GenerateToken(man);
 
                     return new JsonResult(token);
-                    
+
                 }
                 else
                 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PurchaSaler.Api.Entity;
+using PurchaSaler.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
