@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/public.css">
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/vue.min.js"></script>
+	<script src="js/axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="head">
+			<div class="wrapper clearfix">
+				<div class="clearfix" id="top">
+					<h1 class="fl"><a href="index.html"><img src="img/logo.png"/></a></h1>
+					<div class="fr clearfix" id="top1">
+						<p class="fl">
+							<a href="#" id="login">登录</a>
+							<a href="#" id="reg">注册</a>
+						</p>
+						<form action="#" method="get" class="fl">
+							<input type="text" placeholder="" />
+							<input type="button" />
+						</form>
+						<div class="btn fl clearfix">
+							<a href="mygxin.html"><img src="img/grzx.png"/></a>
+							<a href="#" class="er1"><img src="img/ewm.png"/></a>
+							<a href="cart.html"><img src="img/gwc.png"/></a>
+							<p><a href="#"><img src="img/smewm.png"/></a></p>
+						</div>
+					</div>
+				</div>
+				<!-- 分类 -->
+				<ul class="clearfix" id="bott">
+					<li><a href="index.html">首页</a></li>
+					<li><a href="#">所有商品</a></li>
+					<li><a href="#">智能数码</a></li>
+					<li><a href="#">衣装服饰</a></li>
+					<li><a href="#">书籍资料</a></li>
+					<li><a href="#">电器设备</a></li>
+					<li><a href="#">美妆饰品</a></li>
+				</ul>
+				<!-- 分类结束 -->
+			</div>
+			<!--轮播图-->
+			<img src="img/banner1.jpg"/>
+			<!-- 轮播结束 -->
+		</div>
+		<!-- 商品列表开始 -->
+		<div class="people">
+			<div class="wrapper" v-for="p in products" :key="p.id">
+				<div class="pList clearfix tran" style="float: left;">
+					<a :href="'productDetail.html?pid=' + p.productID " style="margin-left: 16px;">
+						<!-- <a :href="'#/newsDetail/' + item.id "></a> -->
+						<dl>
+							<dt>
+								<span class="abl"></span>
+								<img :src="p.photos"/>
+								<span class="abr"></span>
+							</dt>
+							<dd>{{p.productName}}</dd>
+							<dd><span>￥{{p.price}}</span></dd>
+						</dl>
+					</a>			
+				</div>
+			</div>
+		</div>
+		<!-- 商品列表结束 -->
+		<!--右下功能键-->
+		<div class="gotop">
+			<a href="cart.html">
+			<dl>
+				<dt><img src="img/gt1.png"/></dt>
+				<dd>去购<br />物车</dd>
+			</dl>
+			</a>
+			<a href="#" class="dh">
+			<dl>
+				<dt><img src="img/gt2.png"/></dt>
+				<dd>联系<br />客服</dd>
+			</dl>
+			</a>
+			<a href="mygxin.html">
+			<dl>
+				<dt><img src="img/gt3.png"/></dt>
+				<dd>个人<br />中心</dd>
+			</dl>
+			</a>
+			<a href="#" class="toptop" style="display: none">
+			<dl>
+				<dt><img src="img/gt4.png"/></dt>
+				<dd>返回<br />顶部</dd>
+			</dl>
+			</a>
+			<p>400-800-8200</p>
+		</div>
+		<!-- 右下功能键结束 -->
+		<!--footer-->
+		<div class="footer">
+			<div class="top">
+				<div class="wrapper">
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot1.png"/></a>
+						<span class="fl">7天无理由退货</span>
+					</div>
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot2.png"/></a>
+						<span class="fl">15天免费换货</span>
+					</div>
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot3.png"/></a>
+						<span class="fl">满599包邮</span>
+					</div>
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot4.png"/></a>
+						<span class="fl">手机特色服务</span>
+					</div>
+				</div>
+			</div>
+			<p class="dibu">PurchaSaler&copy;2019-2020公司版权所有 京ICP备080100-44备0000111000号<br />
+			违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
+		</div>
+	</div><!-- app end -->		
+	
+</body>
+<script>
+	var vue = new Vue({
+		el:"#app",
+		data() {
+			return {
+				products:[],
+			};
+		},
+		mounted(){
+			this.getAllProductList();
+		},
+		methods: {
+			getAllProductList() {
+				var thisVue = this;
+				axios.get("http://localhost:5000/api/home")
+				.then(function(res){					
+					vue.products = res.data;
+					console.log(res);
+				})
+				.catch(function(error){
+					console.log(error);
+				})
+			},
+		},
+	});
+</script>
+</html>
