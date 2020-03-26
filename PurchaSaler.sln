@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurchaSaler.Api", "PurchaSaler.Api\PurchaSaler.Api.csproj", "{895443D4-FF55-45DD-81D8-D31FC4F714F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PurchaSaler.Api", "PurchaSaler.Api\PurchaSaler.Api.csproj", "{895443D4-FF55-45DD-81D8-D31FC4F714F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurchaSaler.Models", "PurchaSaler.Models\PurchaSaler.Models.csproj", "{64E30889-96D6-4A5F-9245-236DF387A4DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PurchaSaler.Models", "PurchaSaler.Models\PurchaSaler.Models.csproj", "{64E30889-96D6-4A5F-9245-236DF387A4DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurchaSaler.DAL", "PurchaSaler.DAL\PurchaSaler.DAL.csproj", "{EEB2D44E-B1B1-4B73-BFA5-79891D127CEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurchaSaler.BLL", "PurchaSaler.BLL\PurchaSaler.BLL.csproj", "{0D497676-49F5-40EA-953F-D865E7F948F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{64E30889-96D6-4A5F-9245-236DF387A4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64E30889-96D6-4A5F-9245-236DF387A4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64E30889-96D6-4A5F-9245-236DF387A4DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB2D44E-B1B1-4B73-BFA5-79891D127CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB2D44E-B1B1-4B73-BFA5-79891D127CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB2D44E-B1B1-4B73-BFA5-79891D127CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB2D44E-B1B1-4B73-BFA5-79891D127CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D497676-49F5-40EA-953F-D865E7F948F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D497676-49F5-40EA-953F-D865E7F948F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D497676-49F5-40EA-953F-D865E7F948F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D497676-49F5-40EA-953F-D865E7F948F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,7 +49,7 @@ namespace PurchaSaler.Api.Controllers
                     var jwt = new JsonWebToken(_config);
                     var token = jwt.GenerateToken(man);
 
-                    return Ok(token);
+                    return new JsonResult(token);
                     
                 }
                 else
