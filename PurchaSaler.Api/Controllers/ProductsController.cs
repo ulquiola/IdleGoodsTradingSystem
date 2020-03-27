@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PurchaSaler.Models;
@@ -11,19 +10,21 @@ namespace PurchaSaler.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : CorsController
+    public class ProductsController : CorsController
     {
         private readonly PurchaSalerDbContext _db;
-        public HomeController(PurchaSalerDbContext db)
+        public ProductsController(PurchaSalerDbContext db)
         {
             _db = db;
         }
-        [HttpGet]
-        public IActionResult Index()
+
+        [HttpGet("ProductDetail")]
+        public IActionResult GetProductDetail(Guid id)
         {
-            var list = (from l in _db.Products
-                        select l).ToList();
-            return new JsonResult(list);
+            var product = (from p in _db.Products
+                           where p.ProductID == id
+                           select p).FirstOrDefault();
+            return new JsonResult(product);
         }
     }
 }

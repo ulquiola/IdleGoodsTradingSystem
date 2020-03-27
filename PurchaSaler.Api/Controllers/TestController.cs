@@ -18,6 +18,16 @@ namespace PurchaSaler.Api.Controllers
         {
             _db = db;
         }
+
+
+        //添加测试用例
+        //user.UserName = "ulquiola";
+        //user.Email = "ulquiola@163.com";
+        //user.Password = "123456";
+        //_db.Users.Add(user);
+        //_db.SaveChanges();
+        //return Ok();
+
         //添加类型
         [HttpPost("AddType")]
         public IActionResult AddType()

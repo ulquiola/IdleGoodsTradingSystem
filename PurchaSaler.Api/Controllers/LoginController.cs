@@ -27,14 +27,6 @@ namespace PurchaSaler.Api.Controllers
         [HttpPost]
         public IActionResult Login(Users user)
         {
-            //添加测试用例
-            //user.UserName = "ulquiola";
-            //user.Email = "ulquiola@163.com";
-            //user.Password = "123456";
-            //_db.Users.Add(user);
-            //_db.SaveChanges();
-            //return Ok();
-
             //取出这个人的信息
             var man = (from m in _db.Users
                        where m.UserName == user.UserName
