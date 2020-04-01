@@ -14,5 +14,7 @@ namespace PurchaSaler.Infrastructure.ORM
         public DbSet<Users> Users { set; get; }
         public DbSet<Products> Products { set; get; }
         public DbSet<ProductType> ProductTypes { set; get; }
+        public DbSet<ShoppingCarts> ShoppingCarts { get; set; }
+
     }
 }

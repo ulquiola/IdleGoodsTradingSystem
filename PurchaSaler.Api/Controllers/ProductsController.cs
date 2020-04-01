@@ -26,5 +26,11 @@ namespace PurchaSaler.Api.Controllers
                            select p).FirstOrDefault();
             return new JsonResult(product);
         }
+
+        [HttpPost("AddShoppingCart")]
+        public IActionResult AddShoppingCart()
+        {
+            return Ok();
+        }
     }
 }

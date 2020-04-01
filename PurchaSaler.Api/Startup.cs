@@ -27,7 +27,8 @@ namespace PurchaSaler.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddTransient<IProductsRepository, ProductsRepository>();
+            services.AddTransient<IShoppingCartsRepository, ShoppingCartsRepository>();
             services.AddControllers();
             //jwt—È÷§
             var key = Encoding.UTF8.GetBytes(Configuration["JwtSetting:secretkey"]);
