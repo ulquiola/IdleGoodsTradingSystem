@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PurchaSaler.Api.Services;
-using PurchaSaler.Models;
+using PurchaSaler.Domain.Entities;
+using PurchaSaler.Infrastructure.ORM;
 using System.Linq;
 using System.Security.Claims;
 

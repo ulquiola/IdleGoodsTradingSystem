@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PurchaSaler.Models;
+using PurchaSaler.Infrastructure.ORM;
 
 namespace PurchaSaler.Api.Controllers
 {
@@ -30,7 +30,7 @@ namespace PurchaSaler.Api.Controllers
             var userId = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
 
             var username = (from u in _db.Users
-                            where u.id.ToString() == userId
+                            where u.ID.ToString() == userId
                             select u.UserName).FirstOrDefault();
 
             return Ok($"welcome {username} !");

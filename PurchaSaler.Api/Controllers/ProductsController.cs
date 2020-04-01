@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PurchaSaler.Models;
+using PurchaSaler.Infrastructure.ORM;
 
 namespace PurchaSaler.Api.Controllers
 {

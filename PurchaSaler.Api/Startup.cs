@@ -7,9 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PurchaSaler.Domain.IRepositories;
+using PurchaSaler.Infrastructure.ORM;
+using PurchaSaler.Infrastructure.Repositories;
 using System;
 using System.Text;
-using PurchaSaler.Models;
 
 namespace PurchaSaler.Api
 {
@@ -25,7 +27,7 @@ namespace PurchaSaler.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddControllers();
             //jwt—È÷§
             var key = Encoding.UTF8.GetBytes(Configuration["JwtSetting:secretkey"]);
@@ -72,6 +74,7 @@ namespace PurchaSaler.Api
                     Version="v1.1"
                 });
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

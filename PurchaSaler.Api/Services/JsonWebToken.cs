@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PurchaSaler.Models;
+using PurchaSaler.Domain.Entities;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -22,7 +22,7 @@ namespace PurchaSaler.Api.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     //使用Name存储用户id,以便取出
-                    new Claim(ClaimTypes.Name, userinfo.id.ToString())
+                    new Claim(ClaimTypes.Name, userinfo.ID.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(2),
 

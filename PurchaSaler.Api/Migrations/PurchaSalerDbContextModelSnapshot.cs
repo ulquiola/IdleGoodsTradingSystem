@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PurchaSaler.Models;
+using PurchaSaler.Infrastructure.ORM;
 
 namespace PurchaSaler.Api.Migrations
 {
@@ -19,7 +19,7 @@ namespace PurchaSaler.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PurchaSaler.Models.ProductType", b =>
+            modelBuilder.Entity("PurchaSaler.Domain.Entities.ProductType", b =>
                 {
                     b.Property<Guid>("TypeID")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace PurchaSaler.Api.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("PurchaSaler.Models.Products", b =>
+            modelBuilder.Entity("PurchaSaler.Domain.Entities.Products", b =>
                 {
                     b.Property<Guid>("ProductID")
                         .ValueGeneratedOnAdd()
@@ -65,9 +65,9 @@ namespace PurchaSaler.Api.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("PurchaSaler.Models.Users", b =>
+            modelBuilder.Entity("PurchaSaler.Domain.Entities.Users", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -80,7 +80,7 @@ namespace PurchaSaler.Api.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("ID");
 
                     b.ToTable("Users");
                 });
