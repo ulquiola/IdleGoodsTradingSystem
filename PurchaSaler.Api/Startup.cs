@@ -29,6 +29,7 @@ namespace PurchaSaler.Api
         {
             services.AddTransient<IProductsRepository, ProductsRepository>();
             services.AddTransient<IShoppingCartsRepository, ShoppingCartsRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddControllers();
             //jwt—È÷§
             var key = Encoding.UTF8.GetBytes(Configuration["JwtSetting:secretkey"]);

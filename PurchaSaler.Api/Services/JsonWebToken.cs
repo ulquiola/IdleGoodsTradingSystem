@@ -22,7 +22,7 @@ namespace PurchaSaler.Api.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     //使用Name存储用户id,以便取出
-                    new Claim(ClaimTypes.Name, userinfo.ID.ToString())
+                    new Claim(ClaimTypes.Name, userinfo.UserID.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(2),
 
