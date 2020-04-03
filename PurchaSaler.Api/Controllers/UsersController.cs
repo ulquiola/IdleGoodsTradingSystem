@@ -5,6 +5,7 @@ using PurchaSaler.Domain.Entities;
 using PurchaSaler.Domain.IRepositories;
 using PurchaSaler.Api.Services;
 using Microsoft.Extensions.Configuration;
+using PurchaSaler.Api.ViewModel;
 
 namespace PurchaSaler.Api.Controllers
 {
@@ -23,14 +24,20 @@ namespace PurchaSaler.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register(Users user)
+        public IActionResult Register(RegisterVM user)
         {
             bool IsExisted = _usersRepository.IsExisted(user.UserName);
             if(ModelState.IsValid && !IsExisted)
             {
                 //哈希密码
                 user.Password = EncryptProvider.Md5(user.Password);
-                _usersRepository.AddUser(user);
+                var man = new Users()
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Password = user.Password
+                };
+                _usersRepository.AddUser(man);
                 return Ok("注册成功");
             }
             else
@@ -40,7 +47,7 @@ namespace PurchaSaler.Api.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(Users user)
+        public IActionResult Login(LoginVM user)
         {
             if (ModelState.IsValid)
             {

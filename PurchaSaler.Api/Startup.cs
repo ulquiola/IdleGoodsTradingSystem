@@ -59,8 +59,7 @@ namespace PurchaSaler.Api
                  {
                      buider.AllowAnyOrigin()
                      .AllowAnyMethod()
-                     .AllowAnyHeader();
- 
+                     .AllowAnyHeader(); 
                  });
             });
 

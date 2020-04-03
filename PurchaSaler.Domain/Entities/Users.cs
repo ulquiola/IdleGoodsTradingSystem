@@ -9,14 +9,8 @@ namespace PurchaSaler.Domain.Entities
     {
         [Key]
         public Guid UserID { get; set; }
-
-        [Required(ErrorMessage ="请输入用户名")]
         public string UserName { get; set; }
-
-        [Required(ErrorMessage = "请输入邮箱")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "请输入密码")]
         public string Password { get; set; }
     }
 }

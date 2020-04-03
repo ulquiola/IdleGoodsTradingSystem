@@ -14,10 +14,10 @@
 		<div class="head">
 			<div class="wrapper clearfix">
 				<div class="clearfix" id="top">
-					<h1 class="fl"><a href="index.html"><img src="img/logo.png"/></a></h1>
+					<h1 class="fl"><a href="index.html"><img src="img/logo1.png" style="width:200px;height:60px;"/></a></h1>
 					<div class="fr clearfix" id="top1">
 						<p class="fl">
-							<a href="#" id="login">登录</a>
+							<a href="login.html" id="login">登录</a>
 							<a href="#" id="reg">注册</a>
 						</p>
 						<form action="#" method="get" class="fl">
@@ -142,7 +142,7 @@
 				axios.get("http://localhost:5000/api/home")
 				.then(function(res){					
 					vue.products = res.data;
-					console.log(res);
+					// console.log(res);
 				})
 				.catch(function(error){
 					console.log(error);
