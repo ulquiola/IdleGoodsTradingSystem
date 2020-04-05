@@ -4,6 +4,7 @@ using PurchaSaler.Infrastructure.ORM;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace PurchaSaler.Infrastructure.Repositories
 {
@@ -15,12 +16,41 @@ namespace PurchaSaler.Infrastructure.Repositories
         {
             _db = db;
         }
+
+        public void AddProduct(Products product)
+        {
+            _db.Products.Add(product);
+            _db.SaveChanges();
+        }
+
+        public void DelProducts(Guid productid)
+        {
+            var product = (from p in _db.Products
+                           where p.ProductID == productid
+                           select p).FirstOrDefault();
+            _db.Products.Remove(product);
+        }
+
         public List<Products> GetAllProducts()
         {
             var products = (from p in _db.Products
                             select p).ToList();
             return products;
         }
+
+        public Products GetProductByID(Guid productid)
+        {
+            var product = (from p in _db.Products
+                           where p.ProductID == productid
+                           select p).FirstOrDefault();
+            return product;
+        }
+
+        public void UpdateProduct(Products product)
+        {
+            
+        }
+
 
         //public List<Products> GetProductsByType(Guid typid)
         //{

@@ -3,6 +3,7 @@ using PurchaSaler.Domain.IRepositories;
 using PurchaSaler.Infrastructure.ORM;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PurchaSaler.Infrastructure.Repositories
@@ -22,24 +23,36 @@ namespace PurchaSaler.Infrastructure.Repositories
             _db.SaveChanges();
         }
 
-        public IEnumerable<ShoppingCarts> GetAllShoppingCarts(Guid userid)
+        public IEnumerable<ShoppingCarts> GetSomeOneAllShoppingCarts(Guid userid)
         {
-            throw new NotImplementedException();
+            var carts = (from c in _db.ShoppingCarts
+                         where c.UserID == userid
+                         select c);
+            return carts;
         }
 
         public ShoppingCarts GetOneShoppingCart(Guid productid)
         {
-            throw new NotImplementedException();
+            var data = (from d in _db.ShoppingCarts
+                        where d.ProductID == productid
+                        select d).FirstOrDefault();
+            return data;
         }
 
         public IEnumerable<ShoppingCarts> GetShoppingCarts(Guid userid)
         {
-            throw new NotImplementedException();
+            var carts = (from c in _db.ShoppingCarts
+                         where c.UserID == userid
+                         select c);
+            return carts;
         }
 
         public int GetShoppingCartsCount(Guid userid, Guid productid)
         {
-            throw new NotImplementedException();
+            int data = (from p in _db.ShoppingCarts
+                        where p.UserID == userid && p.ProductID == productid
+                        select p).Count();
+            return data;
         }
 
         public void RemoveAllShoppingCarts(IEnumerable<ShoppingCarts> shopcart)
@@ -49,7 +62,9 @@ namespace PurchaSaler.Infrastructure.Repositories
 
         public void RemoveShoppingCarts(ShoppingCarts shopcart)
         {
-            throw new NotImplementedException();
+            _db.ShoppingCarts.RemoveRange(shopcart);
+            _db.SaveChanges();
         }
+
     }
 }

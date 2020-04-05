@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using PurchaSaler.Infrastructure.ORM;
+using PurchaSaler.Domain.IRepositories;
 
 namespace PurchaSaler.Api.Controllers
 {
@@ -13,16 +8,16 @@ namespace PurchaSaler.Api.Controllers
     [ApiController]
     public class HomeController : CorsController
     {
-        private readonly PurchaSalerDbContext _db;
-        public HomeController(PurchaSalerDbContext db)
+        private readonly IProductsRepository _productsRepository;
+
+        public HomeController(IProductsRepository productsRepository)
         {
-            _db = db;
+            _productsRepository = productsRepository;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var list = (from l in _db.Products
-                        select l).ToList();
+            var list = _productsRepository.GetAllProducts();
             return new JsonResult(list);
         }
     }
