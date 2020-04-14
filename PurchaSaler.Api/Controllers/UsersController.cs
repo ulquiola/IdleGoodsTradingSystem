@@ -37,6 +37,7 @@ namespace PurchaSaler.Api.Controllers
                     UserID = new Guid(),
                     UserName = user.UserName,
                     Name = "",
+                    Avatar = "img/defaultAvt.png",
                     Birthday = DateTime.Now.ToString("D"),
                     Sex = "保密",
                     Email = "",
