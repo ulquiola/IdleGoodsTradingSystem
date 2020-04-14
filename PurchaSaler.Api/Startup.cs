@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,8 @@ namespace PurchaSaler.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IProductsRepository, ProductsRepository>();
+            services.AddTransient<IOrdersRepository, OrdersRepository>();
+            services.AddTransient<IOrderItemsRepository, OrderItemsRepository>();
             services.AddTransient<IShoppingCartsRepository, ShoppingCartsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddControllers();
@@ -92,6 +95,8 @@ namespace PurchaSaler.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.UseSwagger();
             app.UseSwaggerUI(option => 

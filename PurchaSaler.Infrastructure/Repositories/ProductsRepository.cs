@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace PurchaSaler.Infrastructure.Repositories
 {
@@ -48,7 +49,8 @@ namespace PurchaSaler.Infrastructure.Repositories
 
         public void UpdateProduct(Products product)
         {
-            
+            _db.Entry(product).State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
 

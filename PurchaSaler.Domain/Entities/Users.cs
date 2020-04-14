@@ -7,10 +7,21 @@ namespace PurchaSaler.Domain.Entities
 {
     public class Users
     {
+        //7
         [Key]
-        public Guid UserID { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public Guid UserID { get; set; }//id
+        
+        [Required(ErrorMessage = "请输入用户名")]        
+        public string UserName { get; set; }  //用户名
+        public string Name { get; set; }//姓名      
+
+        
+        public string Email { get; set; }//邮箱
+
+        public string Birthday { get; set; }//生日
+        public string Sex { get; set; }//性别
+
+        [Required(ErrorMessage = "请输入密码")]
+        public string Password { get; set; } //密码
     }
 }

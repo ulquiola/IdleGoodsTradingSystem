@@ -6,6 +6,7 @@ using PurchaSaler.Domain.IRepositories;
 using PurchaSaler.Api.Services;
 using Microsoft.Extensions.Configuration;
 using PurchaSaler.Api.ViewModel;
+using System;
 
 namespace PurchaSaler.Api.Controllers
 {
@@ -24,7 +25,7 @@ namespace PurchaSaler.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register(RegisterVM user)
+        public IActionResult Register(Users user)
         {
             bool IsExisted = _usersRepository.IsExisted(user.UserName);
             if(ModelState.IsValid && !IsExisted)
@@ -33,8 +34,12 @@ namespace PurchaSaler.Api.Controllers
                 user.Password = EncryptProvider.Md5(user.Password);
                 var man = new Users()
                 {
+                    UserID = new Guid(),
                     UserName = user.UserName,
-                    Email = user.Email,
+                    Name = "",
+                    Birthday = DateTime.Now.ToString("D"),
+                    Sex = "保密",
+                    Email = "",
                     Password = user.Password
                 };
                 _usersRepository.AddUser(man);

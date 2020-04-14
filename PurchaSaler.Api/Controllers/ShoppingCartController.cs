@@ -19,7 +19,7 @@ namespace PurchaSaler.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("GetCarts")]
         public IActionResult GetCarts()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -27,7 +27,7 @@ namespace PurchaSaler.Api.Controllers
             var shoppingcart = _shoppingCartsRepository.GetSomeOneAllShoppingCarts(userid);
             return new JsonResult(shoppingcart);
         }
-        [HttpPost]
+        [HttpPost("AddShoppingCarts")]
         public IActionResult AddShoppingCarts(ShoppingCarts carts)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -45,7 +45,7 @@ namespace PurchaSaler.Api.Controllers
                 return Content("<script>alert('添加成功');history.go(-1)</script>");
             }
         }
-        [HttpPost]
+        [HttpPost("Remove")]
         public ActionResult Remove(Guid productid)
         {
             var delobj = _shoppingCartsRepository.GetOneShoppingCart(productid);
@@ -55,7 +55,7 @@ namespace PurchaSaler.Api.Controllers
             }
             return Ok();
         }
-        [HttpPost]
+        [HttpPost("RemoveAll")]
         public ActionResult RemoveAll(Guid userid)
         {
             var removeall = _shoppingCartsRepository.GetSomeOneAllShoppingCarts(userid);

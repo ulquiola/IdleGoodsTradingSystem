@@ -29,13 +29,26 @@ namespace PurchaSaler.Api.Controllers
             return new JsonResult(product);
         }
 
-        [HttpPost]
-        public IActionResult AddProduct(Products products)
+        [HttpPost("AddProduct")]
+        public IActionResult AddProduct(Products product)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            products.OwnerID = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            product.OwnerID = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
 
-            _productsRepository.AddProduct(products);
+            _productsRepository.AddProduct(product);
+            return Ok();
+        }
+
+        [HttpPost("UpdateProduct")]
+        public IActionResult UpdateProduct(Products product)
+        {
+            _productsRepository.UpdateProduct(product);
+            return Ok();
+        }
+        [HttpPost("DelProduct")]
+        public IActionResult DelProduct(Guid productid)
+        {
+            _productsRepository.DelProducts(productid);
             return Ok();
         }
     }
