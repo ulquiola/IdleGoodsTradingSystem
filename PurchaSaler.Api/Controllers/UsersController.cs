@@ -9,6 +9,8 @@ using PurchaSaler.Api.ViewModel;
 using System;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PurchaSaler.Api.Controllers
 {
@@ -19,11 +21,13 @@ namespace PurchaSaler.Api.Controllers
     {
         private readonly IUsersRepository _usersRepository;
         private readonly IConfiguration _config;
+        private readonly IWebHostEnvironment _environment;
 
-        public UsersController(IUsersRepository usersRepository, IConfiguration config)
+        public UsersController(IUsersRepository usersRepository, IConfiguration config, IWebHostEnvironment environment)
         {
             _usersRepository = usersRepository;
             _config = config;
+            _environment = environment;
         }
 
         [HttpPost("Register")]
@@ -115,6 +119,24 @@ namespace PurchaSaler.Api.Controllers
             _usersRepository.ModifyUser(man);
             return Ok();
         }
+
+        [Authorize]
+        [HttpPost("UpdateAvatar")]
+        public IActionResult UpdateAvatar(IFormFile file)
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var man = _usersRepository.GetUserByID(userid);
+
+            var upload = new UploadImages(_environment);
+            string avatar = upload.Upload(file);
+            man.Avatar = avatar;
+            _usersRepository.ModifyUser(man);
+            return Ok();
+        }
+
+
+
 
 
         //[Authorize]
