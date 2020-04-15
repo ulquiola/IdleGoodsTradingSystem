@@ -39,7 +39,9 @@
 						password:vue.password,
 					})
 					.then(function(res){
-						alert("登录成功，点击确定跳转首页");
+						//本地保存token
+						localStorage.setItem("token",res.data);						
+						alert("登录成功，点击确定跳转首页");						
 						window.location.href = "index.html";				
 					})
 					.catch(function (error){

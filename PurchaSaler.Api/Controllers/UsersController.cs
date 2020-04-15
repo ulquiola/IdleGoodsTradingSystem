@@ -7,13 +7,15 @@ using PurchaSaler.Api.Services;
 using Microsoft.Extensions.Configuration;
 using PurchaSaler.Api.ViewModel;
 using System;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PurchaSaler.Api.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("any")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : CorsController
     {
         private readonly IUsersRepository _usersRepository;
         private readonly IConfiguration _config;
@@ -87,6 +89,32 @@ namespace PurchaSaler.Api.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("UserInfo")]
+        public IActionResult UserInfo()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userid =new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var man = _usersRepository.GetUserByID(userid);
+            //密码置空，不返回密码
+            man.Password = "";
+            return new JsonResult(man);
+        }
+
+        [Authorize]
+        [HttpPost("UpdateInfo")]
+        public IActionResult UpdateInfo(UpdateInfoVM infoVM)
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var man = _usersRepository.GetUserByID(userid);
+                man.Name = infoVM.Name;
+                man.Birthday = infoVM.Birthday;
+                man.Email = infoVM.Email;
+                man.Sex = infoVM.Sex;
+            _usersRepository.ModifyUser(man);
+            return Ok();
+        }
 
 
         //[Authorize]

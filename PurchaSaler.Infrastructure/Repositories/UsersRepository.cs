@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PurchaSaler.Domain.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace PurchaSaler.Infrastructure.Repositories
 {
@@ -56,6 +57,12 @@ namespace PurchaSaler.Infrastructure.Repositories
                         where u.UserName == username
                         select u).FirstOrDefault();
             return user == null ? false:true;
+        }
+
+        public void ModifyUser(Users user)
+        {
+            _db.Entry(user).State = EntityState.Modified;
+            _db.SaveChanges();
         }
     }
 }

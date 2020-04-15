@@ -12,5 +12,6 @@ namespace PurchaSaler.Domain.IRepositories
         List<Users> GetAllUsers();
         void AddUser(Users user);
         void DelUser(Guid userid);
+        void ModifyUser(Users user);
     }
 }

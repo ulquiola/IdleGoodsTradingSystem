@@ -2,9 +2,11 @@
 <html>
 	<head lang="en">
 		<meta charset="utf-8" />
-		<title>个人信息</title>
+		<title>个人中心</title>
 		<link rel="stylesheet" type="text/css" href="css/public.css"/>
 		<link rel="stylesheet" type="text/css" href="css/mygxin.css" />
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
 	</head>
 	<body>
 		<!------------------------------head------------------------------>
@@ -29,15 +31,18 @@
 			<div class="wrapper clearfix">
 				<div class="zuo fl">
 					<h3>
-						<a href="#"><img src="img/tx.png"/></a>
-						<p class="clearfix"><span class="fl">[羊羊羊]</span><span class="fr">[退出登录]</span></p>
+						<a href="mygxin.html"><img :src="user.avatar" width="92px" height="92px"/></a>
+						<p class="clearfix"><span>[{{user.userName}}]</span>
+							<br>
+							<span @click="logout()">[退出登录]</span>
+						</p>
 					</h3>
 					<div>
 						<h4>我的交易</h4>
 						<ul>
-							<li><a href="#">我的购物车</a></li>
+							<li><a href="cart.html">我的购物车</a></li>
 							<li><a href="#">我的置闲</a></li>
-							<li><a href="#">我的订单</a></li>
+							<li><a href="myorderq.html">我的订单</a></li>
 						</ul>
 						<h4>个人中心</h4>
 						<ul>
@@ -54,10 +59,10 @@
 				<div class="you fl">
 					<div class="tx clearfix">
 						<div class="fl clearfix">
-							<a href="#" class="fl"><img src="img/tx.png"/></a>
-							<p class="fl"><span>六六六</span><a href="mygrxx.html">修改个人信息></a></p>
+							<a href="#" class="fl"><img :src="user.avatar" width="92px" height="92px"/></a>
+							<p class="fl"><span>{{user.userName}}</span><a href="mygrxx.html">修改个人信息></a></p>
 						</div>
-						<div class="fr">绑定邮箱：12****4@**.com</div>
+						<!-- <div class="fr">绑定邮箱：12****4@**.com</div> -->
 					</div>					
 				</div>
 			</div>
@@ -117,9 +122,44 @@
 			<p class="dibu">PurchaSaler&copy;2019-2020公司版权所有 京ICP备080100-44备0000111000号<br />
 			违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
 		</div>
-		<script src="js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/user.js" type="text/javascript" charset="utf-8"></script>
 		
 	</body>
+	<script>
+		var vue = new Vue({
+			el:".Bott",
+			data() {
+				return {
+					user:[],
+				}
+			},
+			mounted(){
+				// console.log(localStorage['token']);
+				this.get();
+			}
+			,			
+			methods: {
+				get(){
+					axios.get("http://localhost:5000/api/Users/UserInfo",{
+						headers:{
+                    		'Authorization': "Bearer"+" "+ localStorage['token']
+                   		}
+					})
+					.then(function(res){
+						vue.user = res.data;
+						console.log(vue.user);
+					})
+					.catch(function(error){
+						alert("您的token已失效，请重新登录");
+						window.location.href="login.html";
+					});
+				},
+				logout(){
+					localStorage.setItem("token","");
+					alert("您已退出，点击返回首页");
+					window.location.href="index.html";
+				}
+			},
+
+		});
+	</script>
 </html>

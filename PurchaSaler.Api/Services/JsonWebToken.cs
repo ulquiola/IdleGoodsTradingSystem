@@ -24,7 +24,7 @@ namespace PurchaSaler.Api.Services
                     //使用Name存储用户id,以便取出
                     new Claim(ClaimTypes.Name, userinfo.UserID.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(2),
+                Expires = DateTime.UtcNow.AddMinutes(30),
 
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSetting:secretkey"])),
