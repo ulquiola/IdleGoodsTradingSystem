@@ -123,9 +123,6 @@ namespace PurchaSaler.Api.Migrations
                     b.Property<Guid>("OwnerID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Photos")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -140,6 +137,18 @@ namespace PurchaSaler.Api.Migrations
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("photo1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("photo2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("photo3")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductID");
 

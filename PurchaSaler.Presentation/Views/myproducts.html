@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="utf-8" />
+		<title>我的闲置</title>
+		<link rel="stylesheet" type="text/css" href="css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="css/myproducts.css" />
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+	</head>
+	<body>
+		<!------------------------------head------------------------------>
+		<div class="head ding">
+			<div class="wrapper clearfix">
+				<div class="clearfix" id="top">
+					<h1 class="fl"><a href="index.html"><img src="img/logo1.png" style="width:200px;height:60px;"/></a></h1>
+				</div>					
+			</div>
+		</div>
+		<!------------------------------idea------------------------------>
+		<div class="address mt">
+			<div class="wrapper clearfix">
+				<a href="index.html" class="fl">首页</a>
+				<span>/</span>
+				<a href="mygxin.html" class="on">个人信息</a>
+			</div>
+		</div>
+		
+		<div id="app">
+			<!------------------------------Bott------------------------------>
+		<div class="Bott">
+			<div class="wrapper clearfix">
+				<div class="zuo fl">
+					<h3>
+						<a href="mygxin.html"><img :src="user.avatar" width="92px" height="92px"/></a>
+						<p class="clearfix"><span>[{{user.userName}}]</span>
+							<br>
+							<span @click="logout()">[退出登录]</span>
+						</p>
+					</h3>
+					<div>
+						<h4>我的交易</h4>
+						<ul>
+							<li><a href="cart.html">我的购物车</a></li>
+							<li><a href="myproducts.html">我的闲置</a></li>
+							<li><a href="myorderq.html">我的订单</a></li>
+						</ul>
+						<h4>个人中心</h4>
+						<ul>
+							<li  class="on"><a href="mygxin.html">我的中心</a></li>
+							<li><a href="address.html">地址管理</a></li>
+						</ul>
+						<h4>账户管理</h4>
+						<ul>
+							<li><a href="mygrxx.html">个人信息</a></li>
+							<li><a href="remima.html">修改密码</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="you fl">
+					<div class="my clearfix">
+						<h2 class="fl">我的闲置</h2>
+					</div>
+					<div class="dlist clearfix">
+						<ul class="fl clearfix" id="wa">
+							<li class="on"><a href="#2">全部闲置</a></li>
+							<!-- <li><a href="#2">待支付</a></li>
+							<li><a href="#2l">待收货</a></li>
+                            <li><a href="#2">已关闭</a></li> -->                            
+                        </ul>
+                            <h2 class="fr" id="edit1">发布置闲</h2>
+						<!-- <form action="#" method="get" class="fr clearfix">
+							<input type="text" name="" id="" value="" placeholder="请输入商品名称、订单号" />
+							<input type="button" name="" id="" value="" />
+						</form> -->
+					</div>
+					<div class="dkuang">
+						<p class="one">已收货</p>
+						<div class="word clearfix">
+							<ul class="fl clearfix">
+								<li>2016年12月1日 18:53</li>
+								<li>杨小黄</li>
+								<li>订单号:5160513358520018</li>
+								<li>在线支付</li>
+							</ul>
+							<p class="fr">订单金额：<span>99.00</span>元</p>
+						</div>
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img src="img/g1.jpg"/></a>
+							<p class="fl"><a href="#">家用创意菜盘子圆盘 釉下彩复古</a><a href="#">¥99.00×1</a></p>
+							<p class="fr">
+								<a href="myprod.html">待评价</a>
+								<a href="orderxq.html">订单详情</a>
+							</p>
+						</div>
+					</div>									
+					
+                    <!-- 分页 -->
+					<div class="fenye clearfix">
+						<a href="#"><img src="img/zuo.jpg"/></a>
+						<a href="#">1</a>
+						<a href="#"><img src="img/you.jpg"/></a>
+                    </div>
+                    
+				</div>
+			</div>
+		</div>
+		<!--遮罩-->
+		<div class="mask"></div>
+		<!--编辑弹框-->
+		<div class="bj">
+			<!-- <div class="clearfix"><a href="#" class="fr gb"><img :src="user.avatar" width="92px" height="92px"/></a></div> -->
+			<h3>编辑商品信息</h3>
+			<form action="#">
+                <p><label>商品名：</label><input class="tinfo" v-model="productName" type="text"/></p>                
+                <p><label>价格：</label><input class="tinfo" v-model="price" type="text"/></p>
+                <p><label>库存：</label><input class="tinfo" v-model="stock" type="text"/></p>
+                <p><label>商品描述：</label><input class="tinfo" v-model="description" type="text"/></p>
+                <p>
+                    <label>商品类型：</label>
+                    <select class="tinfo" v-model="productTypeID">
+                        <option value="A5DA1742-D0F9-43D6-72AB-08D7D5F48C08">智能数码</option>
+                        <option value="2DC96AD4-CFC2-4818-72AC-08D7D5F48C08">衣装服饰</option>
+                        <option value="4510437F-5435-4B89-72AD-08D7D5F48C08">书籍资料</option>
+                        <option value="6124534B-B6F1-4CEA-72AE-08D7D5F48C08">电器设备</option>
+                        <option value="85102A4E-60D4-492E-72AF-08D7D5F48C08">美妆饰品</option>
+                    </select>
+                </p>
+                <p><label>展示图片：</label><input accept="image/jpg" type="file" id="files" @change="uploadPhotos" multiple/></p>
+                <p>4张图片：图片展示、图片描述1、图片描述2、图片描述3</p>
+				<div class="bc">
+					<input type="button" value="提交" @click="addProduct()" />
+					<input class="gb" type="button" value="取消" />
+				</div>
+			</form>
+		</div>
+		
+		</div>
+		
+		<!--返回顶部-->
+		<div class="gotop">
+			<a href="cart.html">
+			<dl>
+				<dt><img src="img/gt1.png"/></dt>
+				<dd>去购<br />物车</dd>
+			</dl>
+			</a>
+			<a href="#" class="dh">
+			<dl>
+				<dt><img src="img/gt2.png"/></dt>
+				<dd>联系<br />客服</dd>
+			</dl>
+			</a>
+			<a href="mygxin.html">
+			<dl>
+				<dt><img src="img/gt3.png"/></dt>
+				<dd>个人<br />中心</dd>
+			</dl>
+			</a>
+			<a href="#" class="toptop" style="display: none">
+			<dl>
+				<dt><img src="img/gt4.png"/></dt>
+				<dd>返回<br />顶部</dd>
+			</dl>
+			</a>
+			<p>400-800-8200</p>
+		</div>
+		<!--footer-->
+		<div class="footer">
+			<div class="top">
+				<div class="wrapper">
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot1.png"/></a>
+						<span class="fl">7天无理由退货</span>
+					</div>
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot2.png"/></a>
+						<span class="fl">15天免费换货</span>
+					</div>
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot3.png"/></a>
+						<span class="fl">满599包邮</span>
+					</div>
+					<div class="clearfix">
+						<a href="#2" class="fl"><img src="img/foot4.png"/></a>
+						<span class="fl">手机特色服务</span>
+					</div>
+				</div>
+			</div>
+			<p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br />
+			违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
+		</div>
+	</body>
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script>
+		var vue = new Vue({
+			el:"#app",
+			data() {
+				return {
+					user:[],					
+					productName:"",
+                    productTypeID:"",
+                    price:0,
+                    stock:0,
+                    description:"",
+                    photos:[],
+                    flag:false,
+				}
+			},
+			mounted(){
+				//获取用户信息
+				this.get();
+				//	个人信息 编辑
+				$("#edit1").click(function(){
+					$(".mask").show();
+					$(".bj").show();
+				});				
+				
+				//关闭弹窗
+				$(".gb").click(function(){
+					$(".mask").hide();
+					$(".bj").hide();
+					$(".avatar").hide();
+				});
+			}
+			,			
+			methods: {
+				get(){
+					axios.get("http://localhost:5000/api/Users/UserInfo",{
+						headers:{
+                    		'Authorization': "Bearer"+" "+ localStorage['token']
+                   		}
+					})
+					.then(function(res){
+						vue.user = res.data;
+						vue.name = vue.user.name;
+						vue.birthday = vue.user.birthday;
+						vue.sex = vue.user.sex;
+						vue.email = vue.user.email;
+						// console.log(vue.user);
+					})
+					.catch(function(error){
+						alert("您的token已失效，请重新登录");
+						window.location.href="login.html";
+					});
+				},
+				logout(){
+					localStorage.setItem("token","");
+					alert("您已退出，点击返回首页");
+					window.location.href="index.html";
+				},				
+				uploadPhotos(e){
+                    let files = e.target.files;
+                    let formData = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append("files", files[i]);
+                    }                   
+					axios.post("http://localhost:5000/api/Products/UploadPhotos",formData,{
+						headers: {
+							'Authorization': "Bearer"+" "+ localStorage['token'],
+							'Content-Type': 'multipart/form-data'
+						},
+					})
+					.then(function(res){
+                        alert("图片上传成功");
+                        vue.photos = res.data;
+                        vue.flag = true;
+					})
+					.catch(function(error){
+						alert("您的token已失效，请重新登录");
+					});   
+                },
+                addProduct(){
+                    var thisVue = this;
+					if(thisVue.flag){
+                        axios.post("http://localhost:5000/api/Products/AddProduct",
+                            {
+                                productName: thisVue.productName,
+                                productTypeID: thisVue.productTypeID,
+                                price: thisVue.price,
+                                stock: thisVue.stock,
+                                description: thisVue.description,
+                                image: thisVue.photos[0],
+                                photo1: thisVue.photos[1],
+                                photo2: thisVue.photos[2],
+                                photo3: thisVue.photos[3],	
+                            },
+                            {
+                                headers:{
+                                'Authorization': "Bearer"+" "+ localStorage['token'],
+                                "Content-Type" : "application/json",
+                                },							
+                            }
+                        )
+                        .then(function(res){
+                            alert("发布成功");
+                            window.location.href="myproducts.html"
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                            alert("您的token已失效，请重新登录");
+                            window.location.href="login.html";
+                        });
+                    }else{
+                        alert("图片未上传");
+                    }
+                }
+			},
+
+		});
+	</script>
+</html>
