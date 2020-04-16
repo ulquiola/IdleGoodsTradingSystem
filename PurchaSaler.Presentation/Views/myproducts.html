@@ -197,7 +197,8 @@
 			el:"#app",
 			data() {
 				return {
-					user:[],					
+					user:[],
+					myproducts:[],					
 					productName:"",
                     productTypeID:"",
                     price:0,
@@ -210,7 +211,9 @@
 			mounted(){
 				//获取用户信息
 				this.get();
-				//	个人信息 编辑
+				//获取我的置闲
+				this.getMyProducts();
+				//	 商品编辑
 				$("#edit1").click(function(){
 					$(".mask").show();
 					$(".bj").show();
@@ -232,11 +235,7 @@
                    		}
 					})
 					.then(function(res){
-						vue.user = res.data;
-						vue.name = vue.user.name;
-						vue.birthday = vue.user.birthday;
-						vue.sex = vue.user.sex;
-						vue.email = vue.user.email;
+						vue.user = res.data;						
 						// console.log(vue.user);
 					})
 					.catch(function(error){
@@ -304,7 +303,22 @@
                     }else{
                         alert("图片未上传");
                     }
-                }
+                },
+				getMyProducts(){
+					axios.get("http://localhost:5000/api/Products/GetMyProducts",{
+						headers:{
+                    		'Authorization': "Bearer"+" "+ localStorage['token']
+                   		}
+					})
+					.then(function(res){
+						console.log(res.data);
+					})
+					.catch(function(error){
+						alert("您的token已失效，请重新登录");
+						window.location.href="login.html";
+					});
+				},
+
 			},
 
 		});

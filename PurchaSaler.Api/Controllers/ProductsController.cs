@@ -83,5 +83,15 @@ namespace PurchaSaler.Api.Controllers
             List<string> filesPath= uploadObj.Upload(files);
             return Ok(filesPath);
         }
+
+        [Authorize]
+        [HttpGet("GetMyProducts")]
+        public IActionResult GetMyProducts()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            Guid ownerid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var products = _productsRepository.GetMyProducts(ownerid);
+            return new JsonResult(products);
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace PurchaSaler.Domain.IRepositories
     public interface IProductsRepository
     {
         List<Products> GetAllProducts();
+        List<Products> GetMyProducts(Guid ownerid);
         Products GetProductByID(Guid productid);
         void AddProduct(Products product);
         void DelProducts(Guid productid);

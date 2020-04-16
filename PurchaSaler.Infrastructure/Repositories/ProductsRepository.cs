@@ -39,6 +39,14 @@ namespace PurchaSaler.Infrastructure.Repositories
             return products;
         }
 
+        public List<Products> GetMyProducts(Guid ownerid)
+        {
+            var products = (from p in _db.Products
+                            where p.OwnerID == ownerid
+                            select p).ToList();
+            return products;
+        }
+
         public Products GetProductByID(Guid productid)
         {
             var product = (from p in _db.Products
