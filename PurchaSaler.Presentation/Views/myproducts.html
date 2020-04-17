@@ -126,7 +126,7 @@
                         <option value="85102A4E-60D4-492E-72AF-08D7D5F48C08">美妆饰品</option>
                     </select>
                 </p>
-                <p><label>展示图片：</label><input accept="image/jpg" type="file" id="files" @change="uploadPhotos" multiple/></p>
+                <p><label>上传图片：</label><input accept="image/jpg" type="file" id="files" @change="uploadPhotos" multiple/></p>
                 <p>4张图片：图片展示、图片描述1、图片描述2、图片描述3</p>
 				<div class="bc">
 					<input type="button" value="提交" @click="addProduct()" />
@@ -201,8 +201,8 @@
 					myproducts:[],					
 					productName:"",
                     productTypeID:"",
-                    price:0,
-                    stock:0,
+                    price:"",
+                    stock:"",
                     description:"",
                     photos:[],
                     flag:false,
@@ -271,10 +271,9 @@
                 },
                 addProduct(){
                     var thisVue = this;
-					if(thisVue.flag){
-                        axios.post("http://localhost:5000/api/Products/AddProduct",
-                            {
-                                productName: thisVue.productName,
+					if(thisVue.flag){ 
+						let data ={
+								productName: thisVue.productName,
                                 productTypeID: thisVue.productTypeID,
                                 price: thisVue.price,
                                 stock: thisVue.stock,
@@ -282,23 +281,25 @@
                                 image: thisVue.photos[0],
                                 photo1: thisVue.photos[1],
                                 photo2: thisVue.photos[2],
-                                photo3: thisVue.photos[3],	
-                            },
-                            {
-                                headers:{
-                                'Authorization': "Bearer"+" "+ localStorage['token'],
-                                "Content-Type" : "application/json",
-                                },							
-                            }
-                        )
+                                photo3: thisVue.photos[3],
+						}                      
+						axios({
+							method:'post',
+							url:'http://localhost:5000/api/Products/AddProduct',
+							data:JSON.stringify(data),
+							headers:{
+								'Authorization': "Bearer"+" "+ localStorage['token'],
+								'Content-Type' : 'application/json'
+							}
+						})
                         .then(function(res){
                             alert("发布成功");
-                            window.location.href="myproducts.html"
+                            // window.location.href="myproducts.html";
                         })
                         .catch(function(error){
                             console.log(error);
                             alert("您的token已失效，请重新登录");
-                            window.location.href="login.html";
+                            // window.location.href="login.html";
                         });
                     }else{
                         alert("图片未上传");
@@ -312,6 +313,7 @@
 					})
 					.then(function(res){
 						console.log(res.data);
+						vue.myproducts = res.data;
 					})
 					.catch(function(error){
 						alert("您的token已失效，请重新登录");

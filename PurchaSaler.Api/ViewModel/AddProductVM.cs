@@ -9,8 +9,8 @@ namespace PurchaSaler.Api.ViewModel
     {
         public string ProductName { get; set; }
         public Guid ProductTypeID { get; set; }
-        public double Price { get; set; }
-        public int Stock { get; set; }
+        public string Price { get; set; }
+        public string Stock { get; set; }
         public string Description { get; set; }
         public string image { get; set; }
         public string photo1 { get; set; }
