@@ -74,7 +74,7 @@
 							<input type="button" name="" id="" value="" />
 						</form> -->
 					</div>
-					<div class="dkuang">
+					<!-- <div class="dkuang">
 						<p class="one">已收货</p>
 						<div class="word clearfix">
 							<ul class="fl clearfix">
@@ -93,7 +93,22 @@
 								<a href="orderxq.html">订单详情</a>
 							</p>
 						</div>
-					</div>									
+					</div>									 -->
+					<div class="dkuang" v-for="item in myproducts" :key="item.productID">						
+						<div class="shohou clearfix">
+							<a href="#" class="fl"><img :src="item.image"/></a>
+							<p class="fl">
+								<a>商品名 : {{item.productName}}</a>
+								<a>描述 : {{item.description}}</a>
+								<a>价格 : ¥{{item.price}}</a>
+								<a>库存 : {{item.stock}}</a>
+							</p>
+							<p class="fr">
+								<a href="#">编辑</a>
+								<a href="#">下架</a>
+							</p>
+						</div>
+					</div>
 					
                     <!-- 分页 -->
 					<div class="fenye clearfix">
@@ -294,12 +309,12 @@
 						})
                         .then(function(res){
                             alert("发布成功");
-                            // window.location.href="myproducts.html";
+                            window.location.href="myproducts.html";
                         })
                         .catch(function(error){
                             console.log(error);
                             alert("您的token已失效，请重新登录");
-                            // window.location.href="login.html";
+                            window.location.href="login.html";
                         });
                     }else{
                         alert("图片未上传");
@@ -312,7 +327,7 @@
                    		}
 					})
 					.then(function(res){
-						console.log(res.data);
+						// console.log(res.data);
 						vue.myproducts = res.data;
 					})
 					.catch(function(error){
