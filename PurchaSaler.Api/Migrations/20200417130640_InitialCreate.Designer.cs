@@ -10,8 +10,8 @@ using PurchaSaler.Infrastructure.ORM;
 namespace PurchaSaler.Api.Migrations
 {
     [DbContext(typeof(PurchaSalerDbContext))]
-    [Migration("20200414101252_usersaddavatar")]
-    partial class usersaddavatar
+    [Migration("20200417130640_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,9 +23,10 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.Address", b =>
                 {
-                    b.Property<Guid>("AddressID")
+                    b.Property<int>("AddressID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressDetail")
                         .HasColumnType("nvarchar(max)");
@@ -36,14 +37,14 @@ namespace PurchaSaler.Api.Migrations
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("AddressID");
 
@@ -52,18 +53,19 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.OrderItems", b =>
                 {
-                    b.Property<Guid>("OrderItemsID")
+                    b.Property<int>("OrderItemsID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("OrderID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
@@ -78,9 +80,10 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.Orders", b =>
                 {
-                    b.Property<Guid>("OrderID")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -91,8 +94,8 @@ namespace PurchaSaler.Api.Migrations
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("OrderID");
 
@@ -101,9 +104,10 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.ProductType", b =>
                 {
-                    b.Property<Guid>("TypeID")
+                    b.Property<int>("TypeID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("TypeName")
                         .HasColumnType("nvarchar(max)");
@@ -115,18 +119,16 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.Products", b =>
                 {
-                    b.Property<Guid>("ProductID")
+                    b.Property<int>("ProductID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OwnerID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Photos")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OwnerID")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -134,14 +136,26 @@ namespace PurchaSaler.Api.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProductTypeID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductTypeID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("photo1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("photo2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("photo3")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductID");
 
@@ -150,15 +164,16 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.ShoppingCarts", b =>
                 {
-                    b.Property<Guid>("ShoppingCartID")
+                    b.Property<int>("ShoppingCartID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
@@ -166,8 +181,8 @@ namespace PurchaSaler.Api.Migrations
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("ShoppingCartID");
 
@@ -176,9 +191,10 @@ namespace PurchaSaler.Api.Migrations
 
             modelBuilder.Entity("PurchaSaler.Domain.Entities.Users", b =>
                 {
-                    b.Property<Guid>("UserID")
+                    b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");

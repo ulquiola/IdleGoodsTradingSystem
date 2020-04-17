@@ -24,7 +24,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             _db.SaveChanges();
         }
 
-        public void DelProducts(Guid productid)
+        public void DelProducts(int productid)
         {
             var product = (from p in _db.Products
                            where p.ProductID == productid
@@ -39,7 +39,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             return products;
         }
 
-        public List<Products> GetMyProducts(Guid ownerid)
+        public List<Products> GetMyProducts(int ownerid)
         {
             var products = (from p in _db.Products
                             where p.OwnerID == ownerid
@@ -47,7 +47,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             return products;
         }
 
-        public Products GetProductByID(Guid productid)
+        public Products GetProductByID(int productid)
         {
             var product = (from p in _db.Products
                            where p.ProductID == productid
@@ -62,7 +62,7 @@ namespace PurchaSaler.Infrastructure.Repositories
         }
 
 
-        //public List<Products> GetProductsByType(Guid typid)
+        //public List<Products> GetProductsByType(int typid)
         //{
         //    var products = _db.Products.Where(p => p.ProductTypeID == typid);
         //    return products.ToList();

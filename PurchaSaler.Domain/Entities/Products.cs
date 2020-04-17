@@ -9,10 +9,10 @@ namespace PurchaSaler.Domain.Entities
     {
         //12
         [Key]
-        public Guid ProductID { get; set; }
-        public Guid OwnerID { get; set; }
+        public int ProductID { get; set; }
+        public int OwnerID { get; set; }
         public string ProductName { get; set; }
-        public Guid ProductTypeID { get; set; }
+        public int ProductTypeID { get; set; }
         public double Price { get; set; }
         public int Stock { get; set; }
         public string Description { get; set; }

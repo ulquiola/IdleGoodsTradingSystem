@@ -24,7 +24,7 @@ namespace PurchaSaler.Api.Controllers
         [HttpPost("GenerateOrders")]
         public IActionResult GenerateOrders(Orders orders)
         {
-            orders.OrderID = new Guid();
+            //orders.OrderID = new Guid();
             _ordersRepository.AddOrders(orders);
             ////orderItems.OrderID = orders.OrderID;
             ////_orderItemsRepository.AddOrderItems(orderItems);

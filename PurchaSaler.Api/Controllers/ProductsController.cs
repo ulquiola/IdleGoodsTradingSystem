@@ -30,7 +30,7 @@ namespace PurchaSaler.Api.Controllers
         }
 
         [HttpGet("ProductDetail")]
-        public IActionResult GetProductDetail(Guid productid)
+        public IActionResult GetProductDetail(int productid)
         {
             var product = _productsRepository.GetProductByID(productid);
             return new JsonResult(product);
@@ -43,21 +43,19 @@ namespace PurchaSaler.Api.Controllers
         {
             //all=12 
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            var product = new Products()
-            {
-                ProductID = new Guid(),
-                OwnerID = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value),
-                ProductName = productVM.ProductName,
-                ProductTypeID = productVM.ProductTypeID,
-                Description = productVM.Description,
-                Price = Convert.ToDouble(productVM.Price),
-                Status = "",
-                Stock = Convert.ToInt32(productVM.Stock),
-                image = productVM.image,
-                photo1 = productVM.photo1,
-                photo2 = productVM.photo2,
-                photo3 = productVM.photo3,                
-            };
+            var product = new Products();
+            //主键自增
+            product.OwnerID = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            product.ProductName = productVM.ProductName;
+            product.ProductTypeID = Convert.ToInt32(productVM.ProductTypeID);
+            product.Description = productVM.Description;
+            product.Price = Convert.ToDouble(productVM.Price);
+            product.Status = "";
+            product.Stock = Convert.ToInt32(productVM.Stock);
+            product.image = productVM.image;
+            product.photo1 = productVM.photo1;
+            product.photo2 = productVM.photo2;
+            product.photo3 = productVM.photo3;            
             _productsRepository.AddProduct(product);
             return Ok();
         }
@@ -66,26 +64,24 @@ namespace PurchaSaler.Api.Controllers
         [HttpPost("UpdateProduct")]
         public IActionResult UpdateProduct([FromBody]UpdateProductVM productVM)
         {
-            var product = new Products()
-            {
-                ProductID = new Guid(productVM.ProductID),
-                OwnerID = new Guid(productVM.OwnerID),
-                ProductTypeID = new Guid(productVM.ProductTypeID),
-                ProductName = productVM.ProductName,
-                Description = productVM.Description,
-                Price = Convert.ToDouble(productVM.Price),
-                Status = "",
-                Stock = Convert.ToInt32(productVM.Stock),
-                image = productVM.image,
-                photo1 = productVM.photo1,
-                photo2 = productVM.photo2,
-                photo3 = productVM.photo3,
-            };
+            var product = new Products();
+            product.ProductID = Convert.ToInt32(productVM.ProductID);
+            product.OwnerID = Convert.ToInt32(productVM.OwnerID);
+            product.ProductTypeID = Convert.ToInt32(productVM.ProductTypeID);
+            product.ProductName = productVM.ProductName;
+            product.Description = productVM.Description;
+            product.Price = Convert.ToDouble(productVM.Price);
+            product.Status = "";
+            product.Stock = Convert.ToInt32(productVM.Stock);
+            product.image = productVM.image;
+            product.photo1 = productVM.photo1;
+            product.photo2 = productVM.photo2;
+            product.photo3 = productVM.photo3;
             _productsRepository.UpdateProduct(product);
-            return Ok();
+            return Ok("修改成功");
         }
         [HttpPost("DelProduct")]
-        public IActionResult DelProduct(Guid productid)
+        public IActionResult DelProduct(int productid)
         {
             _productsRepository.DelProducts(productid);
             return Ok();
@@ -105,14 +101,14 @@ namespace PurchaSaler.Api.Controllers
         public IActionResult GetMyProducts()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            Guid ownerid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            int ownerid = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var products = _productsRepository.GetMyProducts(ownerid);
             return new JsonResult(products);
         }
 
         public class RequestId
         {
-            public Guid Id { get; set; }
+            public int Id { get; set; }
         }
 
         //使用对象传递参数，解决guid传递问题

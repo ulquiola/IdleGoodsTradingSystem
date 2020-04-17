@@ -22,7 +22,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             _db.SaveChanges();
         }
 
-        public void DelUser(Guid userid)
+        public void DelUser(int userid)
         {
             var delObj = _db.Users.Where(u => u.UserID == userid).FirstOrDefault();
             _db.Remove(delObj);
@@ -35,7 +35,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             return users;
         }
 
-        public Users GetUserByID(Guid userid)
+        public Users GetUserByID(int userid)
         {
             var user = (from u in _db.Users
                         where u.UserID == userid

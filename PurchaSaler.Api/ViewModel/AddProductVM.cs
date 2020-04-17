@@ -8,7 +8,7 @@ namespace PurchaSaler.Api.ViewModel
     public class AddProductVM
     {
         public string ProductName { get; set; }
-        public Guid ProductTypeID { get; set; }
+        public string ProductTypeID { get; set; }
         public string Price { get; set; }
         public string Stock { get; set; }
         public string Description { get; set; }

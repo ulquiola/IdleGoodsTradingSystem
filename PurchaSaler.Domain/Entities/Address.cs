@@ -8,9 +8,9 @@ namespace PurchaSaler.Domain.Entities
     public class Address
     {
         [Key]
-        public Guid AddressID { get; set; }
-        public Guid UserID { get; set; }
-        public Guid ProductID { get; set; }
+        public int AddressID { get; set; }
+        public int UserID { get; set; }
+        public int ProductID { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
         public string AddressDetail { get; set; }

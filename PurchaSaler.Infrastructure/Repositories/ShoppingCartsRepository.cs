@@ -23,7 +23,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             _db.SaveChanges();
         }
 
-        public IEnumerable<ShoppingCarts> GetSomeOneAllShoppingCarts(Guid userid)
+        public IEnumerable<ShoppingCarts> GetSomeOneAllShoppingCarts(int userid)
         {
             var carts = (from c in _db.ShoppingCarts
                          where c.UserID == userid
@@ -31,7 +31,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             return carts;
         }
 
-        public ShoppingCarts GetOneShoppingCart(Guid productid)
+        public ShoppingCarts GetOneShoppingCart(int productid)
         {
             var data = (from d in _db.ShoppingCarts
                         where d.ProductID == productid
@@ -39,7 +39,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             return data;
         }
 
-        public IEnumerable<ShoppingCarts> GetShoppingCarts(Guid userid)
+        public IEnumerable<ShoppingCarts> GetShoppingCarts(int userid)
         {
             var carts = (from c in _db.ShoppingCarts
                          where c.UserID == userid
@@ -47,7 +47,7 @@ namespace PurchaSaler.Infrastructure.Repositories
             return carts;
         }
 
-        public int GetShoppingCartsCount(Guid userid, Guid productid)
+        public int GetShoppingCartsCount(int userid, int productid)
         {
             int data = (from p in _db.ShoppingCarts
                         where p.UserID == userid && p.ProductID == productid

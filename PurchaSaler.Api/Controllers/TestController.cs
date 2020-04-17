@@ -68,7 +68,7 @@ namespace PurchaSaler.Api.Controllers
                 Price = 60,
                 Description="",
                 image= "img/n4.jpg",
-                ProductTypeID = new Guid("A5DA1742-D0F9-43D6-72AB-08D7D5F48C08"),
+                ProductTypeID = 1,
                 Stock=1,
                 Status="审核通过"
             };
@@ -78,7 +78,7 @@ namespace PurchaSaler.Api.Controllers
                 Price = 70,
                 Description = "",
                 image = "img/n4.jpg",
-                ProductTypeID = new Guid("2DC96AD4-CFC2-4818-72AC-08D7D5F48C08"),
+                ProductTypeID = 1,
                 Stock = 1,
                 Status = "审核通过"
             };
@@ -88,7 +88,7 @@ namespace PurchaSaler.Api.Controllers
                 Price = 80,
                 Description = "",
                 image = "img/n4.jpg",
-                ProductTypeID = new Guid("4510437F-5435-4B89-72AD-08D7D5F48C08"),
+                ProductTypeID = 1,
                 Stock = 1,
                 Status = "审核通过"
             };
@@ -98,7 +98,7 @@ namespace PurchaSaler.Api.Controllers
                 Price = 90,
                 Description = "",
                 image = "img/n4.jpg",
-                ProductTypeID = new Guid("6124534B-B6F1-4CEA-72AE-08D7D5F48C08"),
+                ProductTypeID = 1,
                 Stock = 1,
                 Status = "审核通过"
             };
@@ -108,7 +108,7 @@ namespace PurchaSaler.Api.Controllers
                 Price = 100,
                 Description = "",
                 image = "img/n4.jpg",
-                ProductTypeID = new Guid("85102A4E-60D4-492E-72AF-08D7D5F48C08"),
+                ProductTypeID = 1,
                 Stock = 1,
                 Status = "审核通过"
             };

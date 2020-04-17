@@ -9,7 +9,7 @@ namespace PurchaSaler.Domain.Entities
     {
         //7
         [Key]
-        public Guid UserID { get; set; }//id
+        public int UserID { get; set; }//id
         
         [Required(ErrorMessage = "请输入用户名")]        
         public string UserName { get; set; }  //用户名

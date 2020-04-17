@@ -23,7 +23,7 @@ namespace PurchaSaler.Api.Controllers
         public IActionResult GetCarts()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            Guid userid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            int userid = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var shoppingcart = _shoppingCartsRepository.GetSomeOneAllShoppingCarts(userid);
             return new JsonResult(shoppingcart);
         }
@@ -31,8 +31,8 @@ namespace PurchaSaler.Api.Controllers
         public IActionResult AddShoppingCarts(ShoppingCarts carts)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            Guid userid =new Guid (claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
-            Guid productid = carts.ProductID;
+            int userid =Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            int productid = carts.ProductID;
             int result = _shoppingCartsRepository.GetShoppingCartsCount(userid,productid);
             if (result > 0)
             {
@@ -46,7 +46,7 @@ namespace PurchaSaler.Api.Controllers
             }
         }
         [HttpPost("Remove")]
-        public ActionResult Remove(Guid productid)
+        public ActionResult Remove(int productid)
         {
             var delobj = _shoppingCartsRepository.GetOneShoppingCart(productid);
             if (delobj != null)
@@ -56,7 +56,7 @@ namespace PurchaSaler.Api.Controllers
             return Ok();
         }
         [HttpPost("RemoveAll")]
-        public ActionResult RemoveAll(Guid userid)
+        public ActionResult RemoveAll(int userid)
         {
             var removeall = _shoppingCartsRepository.GetSomeOneAllShoppingCarts(userid);
             if (removeall != null)

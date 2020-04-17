@@ -7,12 +7,12 @@ namespace PurchaSaler.Domain.IRepositories
 {
     public interface IShoppingCartsRepository
     {
-        IEnumerable<ShoppingCarts> GetSomeOneAllShoppingCarts(Guid userid);
+        IEnumerable<ShoppingCarts> GetSomeOneAllShoppingCarts(int userid);
         void AddShoppingCarts(ShoppingCarts shopcart);
         void RemoveShoppingCarts(ShoppingCarts shopcart);
-        ShoppingCarts GetOneShoppingCart(Guid productid);
+        ShoppingCarts GetOneShoppingCart(int productid);
         void RemoveAllShoppingCarts(IEnumerable<ShoppingCarts> shopcart);
-        int GetShoppingCartsCount(Guid userid, Guid productid);
+        int GetShoppingCartsCount(int userid, int productid);
 
 
     }

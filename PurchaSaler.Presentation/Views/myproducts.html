@@ -108,11 +108,11 @@
                 <p>
                     <label>商品类型：</label>
                     <select class="tinfo" v-model="productTypeID">
-                        <option value="A5DA1742-D0F9-43D6-72AB-08D7D5F48C08">智能数码</option>
-                        <option value="2DC96AD4-CFC2-4818-72AC-08D7D5F48C08">衣装服饰</option>
-                        <option value="4510437F-5435-4B89-72AD-08D7D5F48C08">书籍资料</option>
-                        <option value="6124534B-B6F1-4CEA-72AE-08D7D5F48C08">电器设备</option>
-                        <option value="85102A4E-60D4-492E-72AF-08D7D5F48C08">美妆饰品</option>
+                        <option value="1">智能数码</option>
+                        <option value="2">衣装服饰</option>
+                        <option value="3">书籍资料</option>
+                        <option value="4">电器设备</option>
+                        <option value="5">美妆饰品</option>
                     </select>
                 </p>
                 <p><label>上传图片：</label><input accept="image/jpg" type="file" id="files" @change="uploadPhotos" multiple/></p>
@@ -136,11 +136,11 @@
                 <p>
                     <label>商品类型：</label>
                     <select class="tinfo" v-model="product.productTypeID">
-                        <option value="A5DA1742-D0F9-43D6-72AB-08D7D5F48C08">智能数码</option>
-                        <option value="2DC96AD4-CFC2-4818-72AC-08D7D5F48C08">衣装服饰</option>
-                        <option value="4510437F-5435-4B89-72AD-08D7D5F48C08">书籍资料</option>
-                        <option value="6124534B-B6F1-4CEA-72AE-08D7D5F48C08">电器设备</option>
-                        <option value="85102A4E-60D4-492E-72AF-08D7D5F48C08">美妆饰品</option>
+                        <option value="1">智能数码</option>
+                        <option value="2">衣装服饰</option>
+                        <option value="3">书籍资料</option>
+                        <option value="4">电器设备</option>
+                        <option value="5">美妆饰品</option>
                     </select>
                 </p>
                 <p><label>上传图片：</label><input accept="image/jpg" type="file" id="files" @change="uploadPhotos" multiple/></p>
@@ -304,14 +304,15 @@
 						axios({
 							method:'post',
 							url:'http://localhost:5000/api/Products/AddProduct',
-							data:JSON.stringify(data),
+							data:data,
 							headers:{
 								'Authorization': "Bearer"+" "+ localStorage['token'],
 								'Content-Type' : 'application/json'
 							}
 						})
                         .then(function(res){
-                            alert("发布成功");
+							alert("发布成功");
+							thisVue.flag = false;
                             window.location.href="myproducts.html";
                         })
                         .catch(function(error){
@@ -368,35 +369,43 @@
 					vue.xiugai = 0;
 				},
 				updateProduct(){
-					let data ={
-						productID:vue.product.productID,
-						ownerID:vue.product.ownerID,
-						productName:vue.product.productName,
-						productTypeID:vue.product.productTypeID,
-						price:vue.product.price,
-						stock:vue.product.stock,
-						description:vue.product.description,
-						image:vue.photos[0],
-						photo1:vue.photos[1],
-						photo2:vue.photos[2],
-						photo3:vue.photos[3],
+					let param = {
+						productID : vue.product.productID.toString(),
+						ownerID : vue.product.ownerID.toString(),
+						productName : vue.product.productName,
+						productTypeID : vue.product.productTypeID.toString(),
+						price : vue.product.price.toString(),
+						stock : vue.product.stock.toString(),
+						description : vue.product.description,
+						image : vue.photos[0],
+						photo1 : vue.photos[1],
+						photo2 : vue.photos[2],
+						photo3 : vue.photos[3],
+					};
+					if(vue.flag){
+						axios({
+							method:'post',
+							url:'http://localhost:5000/api/Products/UpdateProduct',
+							data:JSON.stringify(param),
+							headers:{
+								'Authorization': "Bearer"+" "+ localStorage['token'],
+								'Content-Type' :'application/json',
+							},
+						})
+						.then(function(res){
+							// console.log(res.data);
+							alert("修改成功");
+							window.location.href="myproducts.html";
+						})
+						.catch(function(error){
+							console.log(error.data);
+							alert("token已失效，请登录");
+							window.location.href = "login.html";
+						});
+					}else{
+						alert("图片未上传");
 					}
-					axios({
-						methods:"post",
-						url:"http://localhost:5000/api/Products/UpdateProduct",
-						data:JSON.stringify(data),
-						headers:{
-							'Authorization': "Bearer"+" "+ localStorage['token'],
-							'Content-Type' : 'application/json'
-						}
-					})
-					.then(function(res){
-						alert("修改成功");
-					})
-					.catch(function(error){
-						console.log(error.data);
-					});
-				}
+				},				
 			},
 
 		});

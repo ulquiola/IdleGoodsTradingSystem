@@ -40,7 +40,7 @@ namespace PurchaSaler.Api.Controllers
                 user.Password = EncryptProvider.Md5(user.Password);
                 var man = new Users()
                 {
-                    UserID = new Guid(),
+                    //UserId 主键自增
                     UserName = user.UserName,
                     Name = "",
                     Avatar = "img/defaultAvt.png",
@@ -98,7 +98,7 @@ namespace PurchaSaler.Api.Controllers
         public IActionResult UserInfo()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userid =new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var userid =Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var man = _usersRepository.GetUserByID(userid);
             //密码置空，不返回密码
             man.Password = "";
@@ -110,7 +110,7 @@ namespace PurchaSaler.Api.Controllers
         public IActionResult UpdateInfo(UpdateInfoVM infoVM)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var userid = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var man = _usersRepository.GetUserByID(userid);
                 man.Name = infoVM.Name;
                 man.Birthday = infoVM.Birthday;
@@ -125,7 +125,7 @@ namespace PurchaSaler.Api.Controllers
         public IActionResult UpdateAvatar(IFormFile file)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            var userid = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var man = _usersRepository.GetUserByID(userid);
 
             var upload = new UploadImages(_environment);
