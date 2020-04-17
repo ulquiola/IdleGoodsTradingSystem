@@ -62,9 +62,25 @@ namespace PurchaSaler.Api.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost("UpdateProduct")]
-        public IActionResult UpdateProduct(Products product)
+        public IActionResult UpdateProduct([FromBody]UpdateProductVM productVM)
         {
+            var product = new Products()
+            {
+                ProductID = new Guid(productVM.ProductID),
+                OwnerID = new Guid(productVM.OwnerID),
+                ProductTypeID = new Guid(productVM.ProductTypeID),
+                ProductName = productVM.ProductName,
+                Description = productVM.Description,
+                Price = Convert.ToDouble(productVM.Price),
+                Status = "",
+                Stock = Convert.ToInt32(productVM.Stock),
+                image = productVM.image,
+                photo1 = productVM.photo1,
+                photo2 = productVM.photo2,
+                photo3 = productVM.photo3,
+            };
             _productsRepository.UpdateProduct(product);
             return Ok();
         }
@@ -92,6 +108,20 @@ namespace PurchaSaler.Api.Controllers
             Guid ownerid = new Guid(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var products = _productsRepository.GetMyProducts(ownerid);
             return new JsonResult(products);
+        }
+
+        public class RequestId
+        {
+            public Guid Id { get; set; }
+        }
+
+        //使用对象传递参数，解决guid传递问题
+        [HttpPost("GetProduct")]
+        public IActionResult GetProduct([FromBody]RequestId id)
+        {
+            var pid = id.Id;
+            var product = _productsRepository.GetProductByID(pid);
+            return new JsonResult(product);
         }
     }
 }

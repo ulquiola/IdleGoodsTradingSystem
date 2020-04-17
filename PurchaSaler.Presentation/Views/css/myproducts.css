@@ -322,3 +322,83 @@
 #shangchuan{
 	color: #A10000;
 }
+
+
+/*遮罩2*/
+.mask2{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+	z-index: 20;
+	
+}
+/*修改置闲*/
+.xiugai,.xg{
+	width: 410px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	margin-top: -180px;
+	margin-left: -220px;
+	z-index: 30;
+	background: #fff;
+	border-radius: 10px;
+	padding: 15px;
+}
+.xiugai div a,.xg div a,.avatar div a{
+	width: 20px;
+	height: 20px;
+}
+.xiugai div a img,.xg div a img,.avatar div a img{
+	width: 100%;
+	display: block;
+}
+.xiugai h3,.xg h3,.avatar h3{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e6e6e6;
+}
+ 
+.xiugai form,.xg form{
+	padding: 40px 50px;
+}
+.xiugai form p,.xg form p{
+	margin-bottom: 10px;
+	color: #666666;
+}
+.xiugai form p .tinfo,.xg form p .tinfo{
+	border:1px solid #e8e8e8; 
+	width: 250px;
+	height: 40px;
+	line-height: 40px;
+	text-indent: 5px;
+}
+.xiugai form .tinfo{
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+.xiugai form span{
+	margin-right: 20px;
+}
+.xiugai form div,.xg form div{
+	margin-top: 30px;
+	display: flex;
+	justify-content: space-around;
+}
+.xiugai form div input,.xg form div input{
+	display: inline-block;
+	width: 120px;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	background: #fff;
+	border: 1px solid #e6e6e6;
+}
+.xiugai form div input:nth-child(1),.xg form div input:nth-child(1){
+	background: #A10000;
+	color: #FFFFFF;
+}

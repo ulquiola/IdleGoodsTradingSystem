@@ -63,37 +63,11 @@
 					</div>
 					<div class="dlist clearfix">
 						<ul class="fl clearfix" id="wa">
-							<li class="on"><a href="#2">全部闲置</a></li>
-							<!-- <li><a href="#2">待支付</a></li>
-							<li><a href="#2l">待收货</a></li>
-                            <li><a href="#2">已关闭</a></li> -->                            
+							<li class="on"><a href="#2">全部闲置</a></li>                 
                         </ul>
                             <h2 class="fr" id="edit1">发布置闲</h2>
-						<!-- <form action="#" method="get" class="fr clearfix">
-							<input type="text" name="" id="" value="" placeholder="请输入商品名称、订单号" />
-							<input type="button" name="" id="" value="" />
-						</form> -->
 					</div>
-					<!-- <div class="dkuang">
-						<p class="one">已收货</p>
-						<div class="word clearfix">
-							<ul class="fl clearfix">
-								<li>2016年12月1日 18:53</li>
-								<li>杨小黄</li>
-								<li>订单号:5160513358520018</li>
-								<li>在线支付</li>
-							</ul>
-							<p class="fr">订单金额：<span>99.00</span>元</p>
-						</div>
-						<div class="shohou clearfix">
-							<a href="#" class="fl"><img src="img/g1.jpg"/></a>
-							<p class="fl"><a href="#">家用创意菜盘子圆盘 釉下彩复古</a><a href="#">¥99.00×1</a></p>
-							<p class="fr">
-								<a href="myprod.html">待评价</a>
-								<a href="orderxq.html">订单详情</a>
-							</p>
-						</div>
-					</div>									 -->
+					
 					<div class="dkuang" v-for="item in myproducts" :key="item.productID">						
 						<div class="shohou clearfix">
 							<a href="#" class="fl"><img :src="item.image"/></a>
@@ -104,12 +78,13 @@
 								<a>库存 : {{item.stock}}</a>
 							</p>
 							<p class="fr">
-								<a href="#">编辑</a>
-								<a href="#">下架</a>
+								<a @click="getProduct(item.productID)">编辑</a>
+								<a>下架</a>
 							</p>
 						</div>
 					</div>
-					
+					<!-- <a id="edit2">修改</a> -->
+
                     <!-- 分页 -->
 					<div class="fenye clearfix">
 						<a href="#"><img src="img/zuo.jpg"/></a>
@@ -122,9 +97,8 @@
 		</div>
 		<!--遮罩-->
 		<div class="mask"></div>
-		<!--编辑弹框-->
-		<div class="bj">
-			<!-- <div class="clearfix"><a href="#" class="fr gb"><img :src="user.avatar" width="92px" height="92px"/></a></div> -->
+		<!--发布弹框-->
+		<div id="fabu" class="bj">
 			<h3>编辑商品信息</h3>
 			<form action="#">
                 <p><label>商品名：</label><input class="tinfo" v-model="productName" type="text"/></p>                
@@ -149,7 +123,33 @@
 				</div>
 			</form>
 		</div>
-		
+		<!--遮罩-->
+		<div class="mask2" v-if="mask2"></div>
+		<!--修改商品弹框-->
+		<div class="xiugai" v-if="xiugai">
+			<h3>修改商品信息</h3>
+			<form action="#">
+                <p><label>商品名：</label><input class="tinfo" v-model="product.productName" type="text"/></p>                
+                <p><label>价格：</label><input class="tinfo" v-model="product.price" type="text"/></p>
+                <p><label>库存：</label><input class="tinfo" v-model="product.stock" type="text"/></p>
+                <p><label>商品描述：</label><input class="tinfo" v-model="product.description" type="text"/></p>
+                <p>
+                    <label>商品类型：</label>
+                    <select class="tinfo" v-model="product.productTypeID">
+                        <option value="A5DA1742-D0F9-43D6-72AB-08D7D5F48C08">智能数码</option>
+                        <option value="2DC96AD4-CFC2-4818-72AC-08D7D5F48C08">衣装服饰</option>
+                        <option value="4510437F-5435-4B89-72AD-08D7D5F48C08">书籍资料</option>
+                        <option value="6124534B-B6F1-4CEA-72AE-08D7D5F48C08">电器设备</option>
+                        <option value="85102A4E-60D4-492E-72AF-08D7D5F48C08">美妆饰品</option>
+                    </select>
+                </p>
+                <p><label>上传图片：</label><input accept="image/jpg" type="file" id="files" @change="uploadPhotos" multiple/></p>
+                <p>4张图片：图片展示、图片描述1、图片描述2、图片描述3</p>
+				<div class="bc">
+					<input type="button" value="提交" @click="updateProduct()" />
+					<input class="gb" type="button" value="取消" @click="tanchuanclose()"/>
+				</div>
+			</form>
 		</div>
 		
 		<!--返回顶部-->
@@ -213,14 +213,18 @@
 			data() {
 				return {
 					user:[],
-					myproducts:[],					
+					myproducts:[],
+					product:[],					
 					productName:"",
                     productTypeID:"",
                     price:"",
                     stock:"",
                     description:"",
                     photos:[],
-                    flag:false,
+					flag:false,
+					mask2:0,
+					xiugai:0,
+					pid:"",
 				}
 			},
 			mounted(){
@@ -228,12 +232,11 @@
 				this.get();
 				//获取我的置闲
 				this.getMyProducts();
-				//	 商品编辑
+				//	 商品发布
 				$("#edit1").click(function(){
 					$(".mask").show();
-					$(".bj").show();
+					$("#fabu").show();
 				});				
-				
 				//关闭弹窗
 				$(".gb").click(function(){
 					$(".mask").hide();
@@ -335,7 +338,65 @@
 						window.location.href="login.html";
 					});
 				},
-
+				getProduct(pid){
+					//弹出
+					vue.mask2 = 1;
+					vue.xiugai = 1;
+					//获取商品信息
+					vue.pid = pid;
+					var thisVue = this;     
+					axios({
+						method:'post',
+						url:'http://localhost:5000/api/Products/GetProduct',
+						data:{
+							id: thisVue.pid,
+						},
+						headers:{
+							'Content-Type' : 'application/json',
+						}
+					})
+					.then(function(res){
+						console.log(res.data);
+						thisVue.product = res.data;
+					})
+					.catch(function(error){
+						console.log(error.data);                            
+					});
+				},
+				tanchuanclose(){
+					vue.mask2 = 0;
+					vue.xiugai = 0;
+				},
+				updateProduct(){
+					let data ={
+						productID:vue.product.productID,
+						ownerID:vue.product.ownerID,
+						productName:vue.product.productName,
+						productTypeID:vue.product.productTypeID,
+						price:vue.product.price,
+						stock:vue.product.stock,
+						description:vue.product.description,
+						image:vue.photos[0],
+						photo1:vue.photos[1],
+						photo2:vue.photos[2],
+						photo3:vue.photos[3],
+					}
+					axios({
+						methods:"post",
+						url:"http://localhost:5000/api/Products/UpdateProduct",
+						data:JSON.stringify(data),
+						headers:{
+							'Authorization': "Bearer"+" "+ localStorage['token'],
+							'Content-Type' : 'application/json'
+						}
+					})
+					.then(function(res){
+						alert("修改成功");
+					})
+					.catch(function(error){
+						console.log(error.data);
+					});
+				}
 			},
 
 		});

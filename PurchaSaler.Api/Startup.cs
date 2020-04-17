@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PurchaSaler.Application.Application_Services;
 using PurchaSaler.Domain.IRepositories;
 using PurchaSaler.Infrastructure.ORM;
 using PurchaSaler.Infrastructure.Repositories;
