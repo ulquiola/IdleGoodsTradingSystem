@@ -27,22 +27,32 @@ namespace PurchaSaler.Api.Controllers
             var shoppingcart = _shoppingCartsRepository.GetSomeOneAllShoppingCarts(userid);
             return new JsonResult(shoppingcart);
         }
+
+        [Authorize]
         [HttpPost("AddShoppingCarts")]
-        public IActionResult AddShoppingCarts(ShoppingCarts carts)
+        public IActionResult AddShoppingCarts([FromBody]ShoppingCarts shoppingCart)
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
-            int userid =Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
-            int productid = carts.ProductID;
+            int userid = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+            int productid = shoppingCart.ProductID;
+            var cart = new ShoppingCarts()
+            {
+                //ShoppingCartID 自增
+                UserID = userid,
+                ProductID = productid,
+                Number = shoppingCart.Number,
+                UnitPrice = shoppingCart.UnitPrice,
+                TotalPrice = shoppingCart.TotalPrice,
+            };
             int result = _shoppingCartsRepository.GetShoppingCartsCount(userid,productid);
             if (result > 0)
             {
-                return Content("<script>alert('该商品已存在购物车');history.go(-1)</script>");
+                return StatusCode(403,"商品已存在与购物车");
             }
             else
             {
-                carts.TotalAmount = carts.Number * carts.UnitPrice;
-                _shoppingCartsRepository.AddShoppingCarts(carts);
-                return Content("<script>alert('添加成功');history.go(-1)</script>");
+                _shoppingCartsRepository.AddShoppingCarts(cart);
+                return Ok("添加成功");
             }
         }
         [HttpPost("Remove")]

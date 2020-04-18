@@ -13,7 +13,7 @@ namespace PurchaSaler.Domain.Entities
         public int ProductID { get; set; }
         public int Number { get; set; }
         public double UnitPrice { get; set; }
-        public double TotalAmount { get; set; }
+        public double TotalPrice { get; set; }
 
     }
 }

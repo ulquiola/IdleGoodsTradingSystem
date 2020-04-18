@@ -65,7 +65,7 @@
 							<p>数量&nbsp;&nbsp;库存<span>{{product.stock}}</span>件</p>
 							<div class="num clearfix">
 								<a @click="subCtr()"><img class="fl sub" src="img/temp/sub.jpg"></a>
-								<span class="fl" contentEditable="true">{{number}}</span>
+								<span class="fl" contentEditable="true" v-model="number">{{number}}</span>
 								<a @click="addCtr()"><img class="fl add" src="img/temp/add.jpg"></a>
                                 <p v-if="msg1" class="please fl">商品数量必须大于0!</p>
                                 <p v-if="msg2" class="please fl">商品数量大于库存!</p>
@@ -73,7 +73,7 @@
 						</div>
 						<div class="btns clearfix">
 							<a href="#2"><p class="buy fl">立即购买</p></a>
-							<a href="#2"><p class="cart fr">加入购物车</p></a>
+							<a @click="addShoppingcart()"><p class="cart fr">加入购物车</p></a>
 						</div>
 					</div>
 				</div>
@@ -232,6 +232,35 @@
                     vue.msg1 = 0;
                     vue.msg2 = 0;
                 }
+            },
+            addShoppingcart(){
+                axios({
+                    method:'post',
+                    url:'http://localhost:5000/api/ShoppingCart/AddShoppingCarts',
+                    data:{
+                        productID: vue.product.productID,
+                        number: vue.number,
+                        unitPrice: vue.product.price,
+                        totalPrice: vue.product.price * vue.number
+                    },
+                    headers:{
+                        'Authorization': "Bearer"+" "+ localStorage['token']
+                    }
+                })
+                .then(function(res){
+                    // console.log(res.data);
+                    alert("添加成功");
+                    window.location.reload();
+                })
+                .catch(function(error){
+                    if(error.response.status==403){
+                        alert("商品已存在与您的购物车");
+                        window.location.reload();
+                    }else{
+                        alert("token已失效，请登录");
+                        window.location.href = 'login.html';
+                    }
+                });
             },
         },
     });
