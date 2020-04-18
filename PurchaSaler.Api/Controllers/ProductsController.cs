@@ -80,11 +80,14 @@ namespace PurchaSaler.Api.Controllers
             _productsRepository.UpdateProduct(product);
             return Ok("修改成功");
         }
+
+        [Authorize]
         [HttpPost("DelProduct")]
-        public IActionResult DelProduct(int productid)
+        public IActionResult DelProduct([FromBody]RequestId id)
         {
-            _productsRepository.DelProducts(productid);
-            return Ok();
+            var pid = id.Id;
+            _productsRepository.DelProducts(pid);
+            return Ok("删除成功");
         }
 
         [Authorize]
@@ -104,12 +107,7 @@ namespace PurchaSaler.Api.Controllers
             int ownerid = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
             var products = _productsRepository.GetMyProducts(ownerid);
             return new JsonResult(products);
-        }
-
-        public class RequestId
-        {
-            public int Id { get; set; }
-        }
+        }        
 
         //使用对象传递参数，解决guid传递问题
         [HttpPost("GetProduct")]

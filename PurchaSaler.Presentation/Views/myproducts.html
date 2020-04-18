@@ -79,7 +79,7 @@
 							</p>
 							<p class="fr">
 								<a @click="getProduct(item.productID)">编辑</a>
-								<a>下架</a>
+								<a @click="delProduct(item.productID)">下架</a>
 							</p>
 						</div>
 					</div>
@@ -292,9 +292,9 @@
 					if(thisVue.flag){ 
 						let data ={
 								productName: thisVue.productName,
-                                productTypeID: thisVue.productTypeID,
-                                price: thisVue.price,
-                                stock: thisVue.stock,
+                                productTypeID: thisVue.productTypeID.toString(),
+                                price: thisVue.price.toString(),
+                                stock: thisVue.stock.toString(),
                                 description: thisVue.description,
                                 image: thisVue.photos[0],
                                 photo1: thisVue.photos[1],
@@ -394,6 +394,7 @@
 						})
 						.then(function(res){
 							// console.log(res.data);
+							vue.flag = false;
 							alert("修改成功");
 							window.location.href="myproducts.html";
 						})
@@ -405,6 +406,30 @@
 					}else{
 						alert("图片未上传");
 					}
+				},
+				delProduct(pid){
+					alert('确认下架该商品');
+					axios({
+						method:'post',
+						url:'http://localhost:5000/api/Products/DelProduct',
+						data:{
+							id:pid,
+						},
+						headers:{
+							'Authorization': "Bearer"+" "+ localStorage['token'],
+							'Content-Type':'application/json'
+						}
+					})
+					.then(function(res){
+						console.log(res.data);
+						alert('下架成功');
+						window.location.href = 'myproducts.html';
+					})
+					.catch(function(error){
+						console.log(error.data);
+						alert('token已失效，请登录');
+						window.location.href = 'login.html'
+					})
 				},				
 			},
 

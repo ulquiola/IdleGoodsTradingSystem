@@ -210,7 +210,7 @@
 	margin-left:20px;
 	color:#C10000;
 	line-height:27px;
-	display: none;
+	/* display: none; */
 }
 .btns p,.changeBtn p{
 	width:170px;

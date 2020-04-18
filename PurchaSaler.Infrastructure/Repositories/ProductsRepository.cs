@@ -26,10 +26,9 @@ namespace PurchaSaler.Infrastructure.Repositories
 
         public void DelProducts(int productid)
         {
-            var product = (from p in _db.Products
-                           where p.ProductID == productid
-                           select p).FirstOrDefault();
+            var product = _db.Products.Single(p => p.ProductID == productid);
             _db.Products.Remove(product);
+            _db.SaveChanges();
         }
 
         public List<Products> GetAllProducts()
