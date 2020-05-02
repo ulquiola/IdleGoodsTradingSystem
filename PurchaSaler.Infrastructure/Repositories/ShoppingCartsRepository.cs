@@ -31,10 +31,10 @@ namespace PurchaSaler.Infrastructure.Repositories
             return carts;
         }
 
-        public ShoppingCarts GetOneShoppingCart(int productid)
+        public ShoppingCarts GetOneShoppingCart(int cartid)
         {
             var data = (from d in _db.ShoppingCarts
-                        where d.ProductID == productid
+                        where d.ShoppingCartID == cartid
                         select d).FirstOrDefault();
             return data;
         }
@@ -62,7 +62,7 @@ namespace PurchaSaler.Infrastructure.Repositories
 
         public void RemoveShoppingCarts(ShoppingCarts shopcart)
         {
-            _db.ShoppingCarts.RemoveRange(shopcart);
+            _db.ShoppingCarts.Remove(shopcart);
             _db.SaveChanges();
         }
 

@@ -10,7 +10,7 @@ namespace PurchaSaler.Domain.IRepositories
         IEnumerable<ShoppingCarts> GetSomeOneAllShoppingCarts(int userid);
         void AddShoppingCarts(ShoppingCarts shopcart);
         void RemoveShoppingCarts(ShoppingCarts shopcart);
-        ShoppingCarts GetOneShoppingCart(int productid);
+        ShoppingCarts GetOneShoppingCart(int cartid);
         void RemoveAllShoppingCarts(IEnumerable<ShoppingCarts> shopcart);
         int GetShoppingCartsCount(int userid, int productid);
 

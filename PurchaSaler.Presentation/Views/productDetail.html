@@ -238,7 +238,9 @@
                     method:'post',
                     url:'http://localhost:5000/api/ShoppingCart/AddShoppingCarts',
                     data:{
-                        productID: vue.product.productID,
+						productID: vue.product.productID,
+						productName: vue.product.productName,
+  						productImg: vue.product.image,
                         number: vue.number,
                         unitPrice: vue.product.price,
                         totalPrice: vue.product.price * vue.number

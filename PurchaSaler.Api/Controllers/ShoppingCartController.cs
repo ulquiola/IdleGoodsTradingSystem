@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PurchaSaler.Api.ViewModel;
 using PurchaSaler.Domain.Entities;
 using PurchaSaler.Domain.IRepositories;
 
@@ -28,6 +29,14 @@ namespace PurchaSaler.Api.Controllers
             return new JsonResult(shoppingcart);
         }
 
+        [HttpPost("GetOneCart")]
+        public IActionResult GetOneCart([FromBody]RequestId id)
+        {
+            var cid = id.Id;
+            var cartinfo = _shoppingCartsRepository.GetOneShoppingCart(cid);
+            return new JsonResult(cartinfo);
+        }
+
         [Authorize]
         [HttpPost("AddShoppingCarts")]
         public IActionResult AddShoppingCarts([FromBody]ShoppingCarts shoppingCart)
@@ -40,6 +49,8 @@ namespace PurchaSaler.Api.Controllers
                 //ShoppingCartID 自增
                 UserID = userid,
                 ProductID = productid,
+                ProductName = shoppingCart.ProductName,
+                ProductImg = shoppingCart.ProductImg,
                 Number = shoppingCart.Number,
                 UnitPrice = shoppingCart.UnitPrice,
                 TotalPrice = shoppingCart.TotalPrice,
@@ -56,14 +67,16 @@ namespace PurchaSaler.Api.Controllers
             }
         }
         [HttpPost("Remove")]
-        public ActionResult Remove(int productid)
+        public ActionResult Remove([FromBody]RequestId id)
         {
-            var delobj = _shoppingCartsRepository.GetOneShoppingCart(productid);
+            int cartid = id.Id;
+            var delobj = _shoppingCartsRepository.GetOneShoppingCart(cartid);
             if (delobj != null)
             {
                 _shoppingCartsRepository.RemoveShoppingCarts(delobj);
+                return Ok("删除成功");
             }
-            return Ok();
+            return StatusCode(404);
         }
         [HttpPost("RemoveAll")]
         public ActionResult RemoveAll(int userid)

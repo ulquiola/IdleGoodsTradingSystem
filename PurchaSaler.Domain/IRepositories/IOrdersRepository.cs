@@ -8,5 +8,8 @@ namespace PurchaSaler.Domain.IRepositories
     public interface IOrdersRepository
     {
         void AddOrders(Orders orders);
+        List<Orders> GetSomeOneOrders(int userid);
+        void DelOrder(int orderid);
+        Orders OrderDetail(int orderid);
     }
 }

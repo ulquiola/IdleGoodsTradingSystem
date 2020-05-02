@@ -2,7 +2,7 @@
 <html>
 	<head lang="en">
 		<meta charset="utf-8" />
-		<title>我的订单</title>
+		<title>个人信息</title>
 		<link rel="stylesheet" type="text/css" href="css/public.css"/>
 		<link rel="stylesheet" type="text/css" href="css/myorder.css" />
 		<script src="js/vue.min.js"></script>
@@ -21,11 +21,11 @@
 		<!------------------------------idea------------------------------>
 		<div class="address mt">
 			<div class="wrapper clearfix">
-				<a href="#" class="fl">首页</a>
-				<span>/</span>
-				<a href="mygxin.html">个人中心</a>
+				<a href="index.html" class="fl">首页</a>
 				<span>/</span>
 				<a href="myorderq.html" class="on">我的订单</a>
+				<span>/</span>
+				<a href="#" class="on">订单详情</a>
 			</div>
 		</div>
 		
@@ -61,47 +61,43 @@
 				</div>
 				<div class="you fl">
 					<div class="my clearfix">
-						<h2 class="fl">我的订单</h2>
-						<a href="#" class="fl">请谨防钓鱼链接或诈骗电话，了解更多&gt;</a>
+						<h2>订单详情<a href="#">请谨防钓鱼链接或诈骗电话，了解更多&gt;</a></h2>
+						<h3>订单号：<span>{{order.orderID}}</span></h3>
 					</div>
-					<div class="dlist clearfix">
-						<ul class="fl clearfix" id="wa">
-							<li class="on"><a href="#2">全部订单</a></li>
-						</ul>
-						<form action="#" method="get" class="fr clearfix">
-							<input type="text" name="" id="" value="" placeholder="请输入商品名称、订单号" />
-							<input type="button" name="" id="" value="" />
-						</form>
-					</div>
-					<div class="dkuang" v-for="item in orders" :key="item.orderID">
-						<p class="one">已付款</p>
-						<div class="word clearfix">
-							<ul class="fl clearfix">
-								<li>{{item.orderCreateTime}}</li>
-								<li>{{item.receivePeople}}</li>
-								<li>订单号:{{item.orderID}}</li>
-								<li>在线支付</li>
-							</ul>
-							<p class="fr">订单金额：<span>{{item.unitPrice}}</span>元</p>
+					<div class="orderList">
+						<div class="orderList1">
+							<h3>已付款</h3>
+							<div class="clearfix">
+								<a href="#" class="fl"><img :src="order.productImg" style="width: 65px;height: 65px;"/></a>
+								<p class="fl"><a href="#">{{order.productName}}</a><a href="#">¥{{order.unitPrice}}×{{order.number}}</a></p>
+							</div>
 						</div>
-						<div class="shohou clearfix">
-							<a href="#" class="fl"><img :src="item.productImg"/></a>
-							<p class="fl"><a href="#">{{item.productName}}</a><a href="#">¥{{item.unitPrice}}×{{item.number}}</a></p>
-							<p class="fr">
-								<a :href="'orderxq.html?oid=' + item.orderID ">订单详情</a>
-								<a @click="removeOrder(item.orderID)">删除订单</a>
-							</p>
+						<div class="orderList1">
+							<h3>收货信息</h3>
+							<p>姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>{{order.receivePeople}}</span></p>
+							<p>联系电话：<span>{{order.phone}}</span></p>
+							<p>收货地址：<span>{{order.address}}</span></p>
 						</div>
+						<div class="orderList1">
+							<h3>支付方式及送货时间</h3>
+							<p>支付方式：<span>在线支付</span></p>
+							<p>送货时间：<span>不限送货时间</span></p>
+						</div>
+						<div class="orderList1 hei">
+							<h3><strong>商品总价：</strong><span>¥{{order.totalPrice}}</span></h3>
+							<p><strong>运费：</strong><span>¥0</span></p>
+							<p><strong>订单金额：</strong><span>¥{{order.totalPrice}}</span></p>
+							<p><strong>实付金额：</strong><span>¥{{order.totalPrice}}</span></p>
+						</div>
+						
 					</div>
-					<!-- 分页 -->
-					<!-- <div class="fenye clearfix">
-						<a href="#"><img src="img/zuo.jpg"/></a>
-						<a href="#">1</a>
-						<a href="#"><img src="img/you.jpg"/></a>
-					</div> -->
+					
+					
 				</div>
 			</div>
 		</div>
+		<
+		
 		<!--返回顶部-->
 		<div class="gotop">
 			<a href="cart.html">
@@ -155,7 +151,7 @@
 			<p class="dibu">PurchaSaler&copy;2019-2020公司版权所有 京ICP备080100-44备0000111000号<br />
 			违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
 		</div>
-		</div>
+		</div>		
 	</body>
 	<script src="js/jquery-1.12.4.min.js"></script>
 	<script>
@@ -164,14 +160,15 @@
 			data() {
 				return {
 					user:[],
-					orders:[],
+					order:[],
 				}
 			},
 			mounted(){
 				//获取个人信息
 				this.get();
 				//获取订单
-				this.getOrders();
+				var oid = this.getUrlParam('oid');
+				this.getOrderDetail(oid);
 			},
 			methods: {
 				get(){
@@ -196,47 +193,32 @@
 					alert("您已退出，点击返回首页");
 					window.location.href="index.html";
 				},
-				//获取订单列表
-				getOrders(){
-					axios({
-						method:'get',
-						url:'http://localhost:5000/api/Orders/GetOrders',
-						headers:{
-							'Authorization': "Bearer"+" "+ localStorage['token']
-						}
-					})
-					.then(function(res){
-						vue.orders = res.data;
-						console.log(vue.orders);
-					})
-					.catch(function(error){
-						if(error.response.status==401){
-							alert("您的token已失效，请重新登录");
-							window.location.href="login.html";
-						}
-					});
+				//获取订单id				
+				getUrlParam(name) {
+                 //构造一个含有目标参数的正则表达式对象
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                //匹配目标参数
+                var r = window.location.search.substr(1).match(reg);
+                //返回参数值
+                if (r != null) return unescape(r[2]); return null; 
 				},
-				//删除订单
-				removeOrder(oid){
+				//获取订单明细
+				getOrderDetail(oid){
 					axios({
 						method:'post',
-						url:'http://localhost:5000/api/Orders/DelOrder',
+						url:'http://localhost:5000/api/Orders/GetOrderDetail',
 						data:{
-							id:oid
-						},
-						headers:{
-							'Authorization': "Bearer"+" "+ localStorage['token']
+							id:parseInt(oid)
 						}
 					})
 					.then(function(res){
+						vue.order = res.data;
 						console.log(res.data);
-						window.location.reload();
 					})
 					.catch(function(error){
-						alert("您的token已失效，请重新登录");
-						window.location.href="login.html";
+						console.log(error);
 					});
-				},
+				},				
 			},
 		});
 	</script>

@@ -10,6 +10,8 @@ namespace PurchaSaler.Domain.Entities
         [Key]
         public int ShoppingCartID { get; set; }
         public int UserID { get; set; }
+        public string ProductName { get; set; }
+        public string ProductImg { get; set; }
         public int ProductID { get; set; }
         public int Number { get; set; }
         public double UnitPrice { get; set; }

@@ -35,67 +35,42 @@
 					<div>小计</div>
 					<div>操作</div>
 				</div>
-				<div class="th">
+				<div class="th" v-for="item in carts" :key="item.shoppingCartID">
 					<div class="pro clearfix">
-						<label class="fl">
-							<input type="checkbox"/>
+						<!-- <label class="fl">
+							<input type="checkbox" :value="item.productID" name="checks" @change="selectPro()">
     						<span></span>
-						</label>
+						</label> -->
 						<a class="fl" href="#">
 							<dl class="clearfix">
-								<dt class="fl"><img src="img/temp/cart01.jpg"></dt>
+								<dt class="fl"><img :src="item.productImg" style="width: 120px;height: 120px;"></dt>
 								<dd class="fl">
-									<p>创意现代简约干花花瓶摆件</p>
-									<p>颜色分类:</p>
-									<p>白色瓷瓶+白色串枚</p>
+									<p style="color: #ffffff;">.</p>
+									<p>{{item.productName}}</p>
+									<p style="color: #ffffff;">.</p>
 								</dd>
 							</dl>
 						</a>
 					</div>
-					<div class="price">￥20.00</div>
+					<div class="price">￥{{item.unitPrice}}</div>
 					<div class="number">
 						<p class="num clearfix">
 							<img class="fl sub" src="img/temp/sub.jpg">
-							<span class="fl">1</span>
+							<span class="fl">{{item.number}}</span>
 							<img class="fl add" src="img/temp/add.jpg">
 						</p>
 					</div>
-					<div class="price sAll">￥20.00</div>
-					<div class="price"><a class="del" href="#2">删除</a></div>
+					<div class="price sAll">￥{{item.unitPrice*item.number}}</div>
+					<div class="price">
+						<a @click="remove(item.shoppingCartID)">删除</a>
+						<a :href="'order.html?cid=' + item.shoppingCartID " style="margin-left: 20px;">结算</a>
+					</div>
 				</div>
-				<div class="th">
-					<div class="pro clearfix">
-						<label class="fl">
-							<input type="checkbox"/>
-    						<span></span>
-						</label>
-						<a class="fl" href="#">
-							<dl class="clearfix">
-								<dt class="fl"><img src="img/temp/cart02.jpg"></dt>
-								<dd class="fl">
-									<p>创意现代简约干花花瓶摆件</p>
-									<p>颜色分类:</p>
-									<p>白色瓷瓶+白色串枚</p>
-								</dd>
-							</dl>
-						</a>
-					</div>
-					<div class="price">￥30.00</div>
-					<div class="number">
-						<p class="num clearfix">
-							<img class="fl sub" src="img/temp/sub.jpg">
-							<span class="fl">1</span>
-							<img class="fl add" src="img/temp/add.jpg">
-						</p>
-					</div>
-					<div class="price sAll">￥30.00</div>
-					<div class="price"><a class="del" href="#2">删除</a></div>
-				</div>		
-						
+				
 				<div class="goOn">空空如也~<a href="index.html">去逛逛</a></div>
-				<div class="tr clearfix">
+				<!-- <div class="tr clearfix">
 					<label class="fl">
-						<input class="checkAll" type="checkbox"/>
+						<input class="checkAll"  type="checkbox" @click="changeAllChecked($event)" id="checkAll"/>
 						<span></span>
 					</label>
 					<p class="fl">
@@ -107,7 +82,7 @@
 						<span>合计:&nbsp;<small id="all">￥0.00</small></span>
 						<a href="order.html" class="count">结算</a>
 					</p>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="mask"></div>
@@ -175,7 +150,7 @@
 		<!----------------mask------------------->
 		<div class="mask"></div>
 		<!-------------------mask内容------------------->
-		<div class="proDets">
+		<!-- <div class="proDets">
 			<img class="off" src="img/temp/off.jpg" />
 			<div class="proCon clearfix">
 				<div class="proImg fr">
@@ -203,11 +178,11 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="pleaseC">
+		</div> -->
+		<!-- <div class="pleaseC">
 			<p>请选择宝贝</p>
 			<img class="off" src="img/temp/off.jpg" />
-		</div>
+		</div> -->
 		</div>
 		
 	</body>
@@ -217,10 +192,16 @@
 			el:"#app",
 			data() {
 				return {
-
+					carts:[],//购物车列表
+					// sumPrice:0,  //合计金额
+					// totalNumber: 0, //总数
+					// select:[]	//选择列表
+					
 				}
 			},
 			mounted(){
+				//获取购物车
+				this.getCarts();
 				//	回到顶部	
 				$(".gotop a").hover(function(){
 					var aa=$(this).hasClass("dh");
@@ -243,176 +224,82 @@
 						$(window).scrollTop(0);
 					});
 				});
-				//
-				/**************数量加减***************/
-				$(".num .sub").click(function(){
-					var num = parseInt($(this).siblings("span").text());
-					if(num<=1){
-						$(this).attr("disabled","disabled");
-					}else{
-						num--;
-						$(this).siblings("span").text(num);
-						//获取除了货币符号以外的数字
-						var price = $(this).parents(".number").prev().text().substring(1);
-						//单价和数量相乘并保留两位小数
-						$(this).parents(".th").find(".sAll").text('￥'+(num*price).toFixed(2));
-						jisuan();
-						zg();
-					}
-				});
-				$(".num .add").click(function(){
-					var num = parseInt($(this).siblings("span").text());
-					if(num>=5){
-						confirm("限购5件");
-					}else{
-						num++;
-						$(this).siblings("span").text(num);
-						var price = $(this).parents(".number").prev().text().substring(1);
-						$(this).parents(".th").find(".sAll").text('￥'+(num*price).toFixed(2));
-						jisuan();
-						zg();
-					}
-				});
-				//计算总价
-				function jisuan(){
-					var all=0;
-					var len =$(".th input[type='checkbox']:checked").length;
-					if(len==0){
-						$("#all").text('￥'+parseFloat(0).toFixed(2));
-					}else{
-						$(".th input[type='checkbox']:checked").each(function(){
-							//获取小计里的数值
-							var sAll = $(this).parents(".pro").siblings('.sAll').text().substring(1);
-							//累加
-							all+=parseFloat(sAll);
-							//赋值
-							$("#all").text('￥'+all.toFixed(2));
-						})
-					}
-					
-				}
-				//计算总共几件商品
-				function zg(){
-					var zsl = 0;
-					var index = $(".th input[type='checkbox']:checked").parents(".th").find(".num span");
-					var len =index.length;
-					if(len==0){
-						$("#sl").text(0);
-					}else{
-						index.each(function(){
-							zsl+=parseInt($(this).text());
-							$("#sl").text(zsl);
-						})
-					}
-					if($("#sl").text()>0){
-						$(".count").css("background","#c10000");
-					}else{
-						$(".count").css("background","#8e8e8e");
-					}
-				}
-				/*****************商品全选***********************/
-				$("input[type='checkbox']").on('click',function(){
-					var sf = $(this).is(":checked");
-					var sc= $(this).hasClass("checkAll");
-					if(sf){
-						if(sc){
-							$("input[type='checkbox']").each(function(){  
-								this.checked=true;  
-						}); 
-							zg();
-							jisuan();
-						}else{
-							$(this).checked=true; 
-							var len = $("input[type='checkbox']:checked").length;
-							var len1 = $("input").length-1;
-							if(len==len1){
-								$("input[type='checkbox']").each(function(){  
-									this.checked=true;  
-								}); 
-							}
-							zg();
-							jisuan();
-						}
-					}else{
-						if(sc){
-							$("input[type='checkbox']").each(function(){  
-								this.checked=false;  
-						}); 
-							zg();
-							jisuan();
-						}else{
-							$(this).checked=false;
-							var len = $(".th input[type='checkbox']:checked").length;
-							var len1 = $("input").length-1;
-							if(len<len1){
-								$('.checkAll').attr("checked",false);
-							}
-							zg();
-							jisuan();
-						}
-					}
-					
-				});
-				/****************************proDetail 加入购物车*******************************/
-				$(".btns .cart").click(function(){
-					if($(".categ p").hasClass("on")){
-						var num = parseInt($(".num span").text());
-						var num1 = parseInt($(".goCart span").text());
-						$(".goCart span").text(num+num1);
-					}
-				});
-				
-				//删除购物车商品
-				$('.del').click(function(){
-					//单个删除
-					if($(this).parent().parent().hasClass("th")){
-						$(".mask").show();
-						$(".tipDel").show();
-						index = $(this).parents(".th").index()-1;
-						$('.cer').click(function(){
-							$(".mask").hide();
-							$(".tipDel").hide();
-							$(".th").eq(index).remove();
-							$('.cer').off('click');
-							if($(".th").length==0){
-								$(".table .goOn").show();
-							}
-						})
-					}else{
-						//选中多个一起删除
-						if($(".th input[type='checkbox']:checked").length==0){
-							$(".mask").show();
-							$(".pleaseC").show();
-						}
-						else{
-							$(".mask").show();
-							$(".tipDel").show();
-							$('.cer').click(function(){
-								$(".th input[type='checkbox']:checked").each(function(j){
-									index = $(this).parents('.th').index()-1;
-									$(".th").eq(index).remove();
-									if($(".th").length==0){
-										$(".table .goOn").show();
-									}
-								})
-								$(".mask").hide();
-								$(".tipDel").hide();
-								zg();
-								jisuan();
-							})
-						}
-					}
-				})
-				$('.cancel').click(function(){
-					$(".mask").hide();
-					$(".tipDel").hide();
-				});
+				//			
 			},
 			methods: {
-				name() {
-					
+				//购物车列表
+				getCarts() {
+					axios({
+						method:'get',
+						url:'http://localhost:5000/api/ShoppingCart/GetCarts',
+						headers:{
+							'Authorization':'Bearer'+' '+localStorage['token']
+						}
+					})
+					.then(function(res){
+						console.log(res.data);
+						vue.carts = res.data;
+					})
+					.catch(function(error){
+						console.log(error);
+						alert('token已失效，请登录');
+						window.location.href = 'login.html';
+					});					
+				},
+				//全选
+				changeAllChecked(event){
+					var input = document.getElementsByTagName('input');
+					if(event.currentTarget.checked){
+						for(var i = 0; i<input.length;i++){
+							if(!input[i].checked){
+								input[i].checked = true;
+								this.select.push(input[i].value);
+							}
+						}
+					}
+					else{
+						for(var i = 0; i<input.length;i++){
+							input[i].checked = false;
+							this.select = [];
+						}
+					}
+				},
+				//商品选择
+				selectPro(){
+					var all = document.getElementById('checkAll');
+					var obj = document.getElementsByName('checks');					
+					for(var i in obj){
+						if (obj[i].checked){							
+							vue.select.push(obj[i].value);
+							vue.select = Array.from(new Set(vue.select));
+						}						
+					}
+					if(vue.select.length == vue.carts.length){
+						all.checked = true;
+					}else{
+						all.checked = false;
+					}					
+				},
+				//移除购物车
+				remove(cartid){
+					axios({
+						url:'http://localhost:5000/api/ShoppingCart/Remove',
+						method:'post',
+						data:{
+							id:parseInt(cartid)
+						}
+					})
+					.then(function(res){
+						console.log(res.data);
+						alert("是否删除");
+						window.location.href = 'cart.html';
+					})
+					.catch(function(error){
+						console.log(error);
+					});
 				},
 			},
+			
 		});
 	</script>
 </html>
