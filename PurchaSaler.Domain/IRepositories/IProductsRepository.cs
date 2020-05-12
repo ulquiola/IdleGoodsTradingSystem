@@ -13,6 +13,8 @@ namespace PurchaSaler.Domain.IRepositories
         void AddProduct(Products product);
         void DelProducts(int productid);
         void UpdateProduct(Products product);
+        List<Products> SearchProductByTypeID(int typeid);
+        List<Products> SearchProductByStr(string searchStr);
         
     }
 }

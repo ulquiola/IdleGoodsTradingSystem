@@ -54,6 +54,22 @@ namespace PurchaSaler.Infrastructure.Repositories
             return product;
         }
 
+        public List<Products> SearchProductByStr(string searchStr)
+        {
+            var data = (from d in _db.Products
+                        where d.ProductName.Contains(searchStr) || d.Description.Contains(searchStr)
+                        select d).ToList();
+            return data;
+        }
+
+        public List<Products> SearchProductByTypeID(int typeid)
+        {
+            var data = (from d in _db.Products
+                        where d.ProductTypeID ==typeid
+                        select d).ToList();
+            return data;
+        }
+
         public void UpdateProduct(Products product)
         {
             _db.Entry(product).State = EntityState.Modified;

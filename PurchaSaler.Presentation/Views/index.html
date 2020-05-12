@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -21,8 +21,8 @@
 							<a href="reg.html" id="reg">注册</a>
 						</p>
 						<form action="#" method="get" class="fl">
-							<input type="text" placeholder="" />
-							<input type="button" />
+							<input type="text" placeholder="" v-model="searchStr"/>
+							<input type="button" @click="getProductByStr()"/>
 						</form>
 						<div class="btn fl clearfix">
 							<a href="mygxin.html"><img src="img/grzx.png"/></a>
@@ -35,12 +35,12 @@
 				<!-- 分类 -->
 				<ul class="clearfix" id="bott">
 					<li><a href="index.html">首页</a></li>
-					<li><a href="#">所有商品</a></li>
-					<li><a href="#">智能数码</a></li>
-					<li><a href="#">衣装服饰</a></li>
-					<li><a href="#">书籍资料</a></li>
-					<li><a href="#">电器设备</a></li>
-					<li><a href="#">美妆饰品</a></li>
+					<li><a href="index.html">所有商品</a></li>
+					<li><a @click="getProductByTypeid(1)">智能数码</a></li>
+					<li><a @click="getProductByTypeid(2)">衣装服饰</a></li>
+					<li><a @click="getProductByTypeid(3)">书籍资料</a></li>
+					<li><a @click="getProductByTypeid(4)">电器设备</a></li>
+					<li><a @click="getProductByTypeid(5)">美妆饰品</a></li>
 				</ul>
 				<!-- 分类结束 -->
 			</div>
@@ -132,6 +132,7 @@
 		data() {
 			return {
 				products:[],
+				searchStr:''
 			};
 		},
 		mounted(){
@@ -163,9 +164,10 @@
 			this.getAllProductList();
 		},
 		methods: {
+			//获取所有商品列表
 			getAllProductList() {
 				var thisVue = this;
-				axios.get("http://localhost:5000/api/home")
+                axios.get("http://localhost:5000/api/Home/GetProductList")
 				.then(function(res){					
 					vue.products = res.data;
 					// console.log(res);
@@ -174,6 +176,39 @@
 					console.log(error);
 				})
 			},
+			//根据商品类型获取商品列表
+			getProductByTypeid(tid){
+				axios({
+					method:'post',
+					url:'http://localhost:5000/api/Home/SearchByType',
+					data:{
+						typeid:tid	
+					}
+				})
+				.then(function(res){
+					vue.products = res.data;
+				})
+				.catch(function(error){
+					console.log(error);
+				});
+			},
+			//根据关键字搜索商品
+			getProductByStr(){
+				axios({
+					method:'post',
+					url:'http://localhost:5000/api/Home/SearchByString',
+					data:{
+						searchStr:vue.searchStr
+					}
+				})
+				.then(function(res){
+					// console.log(res.data);
+					vue.products = res.data;
+				})
+				.catch(function(error){
+					console.log(error);
+				});
+			}
 		},
 	});
 </script>
