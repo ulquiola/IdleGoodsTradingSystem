@@ -29,6 +29,7 @@ namespace PurchaSaler.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IProductsRepository, ProductsRepository>();
             services.AddTransient<IOrdersRepository, OrdersRepository>();
             services.AddTransient<IOrderItemsRepository, OrderItemsRepository>();

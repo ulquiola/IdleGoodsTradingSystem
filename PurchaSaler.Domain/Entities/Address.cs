@@ -10,11 +10,16 @@ namespace PurchaSaler.Domain.Entities
         [Key]
         public int AddressID { get; set; }
         public int UserID { get; set; }
-        public int ProductID { get; set; }
+        //public int ProductID { get; set; }
+        //收件人
+        public string name { get; set; }
+        public int phone { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
+        //县
+        public string County { get; set; }
         public string AddressDetail { get; set; }
-        public bool IsDefault { get; set; }
+        //public bool IsDefault { get; set; }
 
     }
 }
