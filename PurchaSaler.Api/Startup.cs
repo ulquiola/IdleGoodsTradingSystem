@@ -57,7 +57,7 @@ namespace PurchaSaler.Api
                 };
             });
 
-            //注册Cors服务
+            //注册Cors服务，添加any策略
             services.AddCors(option =>
             {
                 option.AddPolicy("any", buider =>
